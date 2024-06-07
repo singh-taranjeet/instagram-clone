@@ -17,8 +17,8 @@ export async function GET() {
   ];
 
   // get random number from 1 to 7
-  function randomNumber() {
-    return Math.floor(Math.random() * 6) + 1;
+  function randomNumber(n = 6) {
+    return Math.floor(Math.random() * n) + 1;
   }
 
   function shuffle(array: string[]) {
@@ -51,13 +51,19 @@ export async function GET() {
   }
 
   const posts = await fetchPosts();
+  const users = await fetch("http://localhost:3000/api/users").then((res) =>
+    res.json()
+  );
   // Fetch comments for each post
   const postsWithComments = await Promise.all(
     posts.map(async (post: any) => {
       const comments = await fetch(
         `https://jsonplaceholder.typicode.com/posts/${post.id}/comments`
       ).then((res) => res.json());
-      return { ...post, comments, images: getRandomImages() };
+
+      const user = users[randomNumber(3)];
+
+      return { ...post, comments, images: getRandomImages(), user };
     })
   );
 
