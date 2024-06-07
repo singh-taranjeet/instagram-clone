@@ -7,13 +7,15 @@ import { Icon } from "../Icon";
 export function Posts() {
   const { data } = useQuery({
     queryKey: ["posts"],
-    queryFn: queries.fetchUsers,
+    queryFn: queries.fetchPosts,
   });
+
+  console.log("posts d", data);
 
   return (
     <ul className="flex flex-col mt-small items-center">
       {/* iterate first 10 items only */}
-      {data?.slice(0, 5).map((user: any) => (
+      {data?.map((user: any) => (
         <li key={user.id} className="py-small border-b border-slate-200 w-full">
           <div className="flex flex-col gap-small w-full justify-center">
             <span className="flex gap-small w-full px-gutter">
@@ -21,7 +23,7 @@ export function Posts() {
                 width={32}
                 height={32}
                 alt="dsf"
-                src="https://via.placeholder.com/150/92c952"
+                src={`/posts/${user.images?.[0]}`}
               />
               official-channel
             </span>
@@ -29,8 +31,8 @@ export function Posts() {
               <Image
                 className="max-w-md bg-cover object-cover mx-auto"
                 fill={true}
-                alt="dsf"
-                src="https://via.placeholder.com/150/92c952"
+                alt={user.title}
+                src={`/posts/${user.images?.[0]}`}
               />
             </div>
             <div className="flex gap-small mx-gutter">
@@ -44,7 +46,8 @@ export function Posts() {
             <div className="flex flex-col mx-gutter">
               <b className="text-sm">100 likes</b>
               <span>
-                <b className="text-sm">Taranjeet Singh</b> Lorem ipsum dolor sit
+                <b className="text-sm">Taranjeet Singh</b>{" "}
+                {user?.comments[0].name}
               </span>
               <span className="text-sm text-slate-500">
                 view all 150 comments
