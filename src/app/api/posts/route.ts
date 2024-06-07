@@ -56,7 +56,7 @@ export async function GET() {
   );
   // Fetch comments for each post
   const postsWithComments = await Promise.all(
-    posts.map(async (post: any) => {
+    posts.slice(0, 10).map(async (post: any) => {
       const comments = await fetch(
         `https://jsonplaceholder.typicode.com/posts/${post.id}/comments`
       ).then((res) => res.json());
