@@ -1,20 +1,29 @@
-"use client";
-import { useQuery } from "@tanstack/react-query";
+import {
+  dehydrate,
+  QueryClient,
+  HydrationBoundary,
+} from "@tanstack/react-query";
+import { queries } from "./utils";
+import { Status } from "./components/Status";
+import { Posts } from "./components/Posts";
 
-function fetchUsers() {
-  return fetch("https://jsonplaceholder.typicode.com/users").then((res) =>
-    res.json()
-  );
-}
+export default async function Home() {
+  const queryClient = new QueryClient();
 
-export default function Home() {
-  // fetch users using react-query
-  const { data, isLoading, isError } = useQuery({
+  await queryClient.prefetchQuery({
     queryKey: ["users"],
-    queryFn: fetchUsers,
+    queryFn: queries.fetchUsers,
   });
 
-  console.log(data, isLoading, isError);
+  await queryClient.prefetchQuery({
+    queryKey: ["posts"],
+    queryFn: queries.fetchPosts,
+  });
 
-  return <>sdf</>;
+  return (
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <Status />
+      <Posts />
+    </HydrationBoundary>
+  );
 }
