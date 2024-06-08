@@ -1,3 +1,5 @@
+import { baseUrl } from "@/app/utils";
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = Number(searchParams.get("page")) || 0;
@@ -55,9 +57,7 @@ export async function GET(request: Request) {
   }
 
   const posts = await fetchPosts();
-  const users = await fetch("http://localhost:3000/api/users").then((res) =>
-    res.json()
-  );
+  const users = await fetch(`${baseUrl}api/users`).then((res) => res.json());
   // Fetch comments for each post
   const postsWithComments = await Promise.all(
     posts

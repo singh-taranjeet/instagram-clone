@@ -2,7 +2,7 @@
 import { QueryClient } from "@tanstack/react-query";
 import { cache } from "react";
 
-const baseUrl =
+export const baseUrl =
   typeof window === "undefined"
     ? "http://localhost:3000/"
     : window?.location?.href;
