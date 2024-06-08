@@ -1,4 +1,8 @@
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = Number(searchParams.get("page")) || 0;
+
+  console.log("page", id, request.url);
   function fetchPosts() {
     return fetch("https://jsonplaceholder.typicode.com/posts").then((res) =>
       res.json()
@@ -55,16 +59,20 @@ export async function GET() {
     res.json()
   );
   // Fetch comments for each post
+  console.log("Start", id * 10);
+  console.log("To", (id + 1) * 10);
   const postsWithComments = await Promise.all(
-    posts.slice(0, 10).map(async (post: any) => {
-      const comments = await fetch(
-        `https://jsonplaceholder.typicode.com/posts/${post.id}/comments`
-      ).then((res) => res.json());
+    posts
+      .slice(Number(id) * 10, (Number(id) + 1) * 10)
+      .map(async (post: any) => {
+        const comments = await fetch(
+          `https://jsonplaceholder.typicode.com/posts/${post.id}/comments`
+        ).then((res) => res.json());
 
-      const user = users[randomNumber(3)];
+        const user = users[randomNumber(3)];
 
-      return { ...post, comments, images: getRandomImages(), user };
-    })
+        return { ...post, comments, images: getRandomImages(), user };
+      })
   );
 
   return Response.json(postsWithComments);

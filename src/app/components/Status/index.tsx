@@ -10,7 +10,7 @@ export function Status() {
   });
 
   return (
-    <ul className="flex mt-11 justify-center gap-small w-screen border-y py-small border-slate-200">
+    <ul className="flex mt-11 justify-center gap-small border-y py-small border-slate-200">
       {/* iterate first 10 items only */}
       {data?.slice(0, 5).map((user: any, index: number) => (
         <li key={index} className="rounded-full w-14 h-14">

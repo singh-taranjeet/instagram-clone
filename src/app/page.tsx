@@ -15,9 +15,14 @@ export default async function Home() {
     queryFn: queries.fetchUsers,
   });
 
-  await queryClient.prefetchQuery({
+  await queryClient.prefetchInfiniteQuery({
     queryKey: ["posts"],
     queryFn: queries.fetchPosts,
+    getNextPageParam: (lastPage: any, pages: any) => {
+      return pages.length;
+    },
+    initialPageParam: 0, // Provide the initialPageParam value
+    //placeholderData: keepPreviousData,
   });
 
   return (
