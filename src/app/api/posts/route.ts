@@ -20,10 +20,19 @@ export async function GET(request: Request) {
     "ready-to-div.png",
     "sports.png",
     "study-abroad.png",
+    "australia.png",
+    "9.png",
+    "15.png",
+    "not-found.png",
+    "3.png",
+    "sharp-logo.png",
+    "hello.png",
+    "12.png",
+    "5.png",
   ];
 
   // get random number from 1 to 7
-  function randomNumber(n = 6) {
+  function randomNumber(n = images.length - 1) {
     return Math.floor(Math.random() * n) + 1;
   }
 

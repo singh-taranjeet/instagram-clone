@@ -13,8 +13,8 @@ import React from "react";
 function MobileImageContainer(props: { children: React.ReactNode }) {
   return (
     <div
-      style={{ width: "min(470px, 100vw)", paddingBottom: `100%` }}
-      className="mobile relative flex flex-col justify-center mx-auto items-center xs:hidden"
+      style={{ width: "min(420px, 100vw)", paddingBottom: `100%` }}
+      className="mobile relative flex flex-col justify-center items-center xs:hidden"
     >
       {props.children}
     </div>
@@ -24,8 +24,8 @@ function MobileImageContainer(props: { children: React.ReactNode }) {
 function DesktopImageContainer(props: { children: React.ReactNode }) {
   return (
     <div
-      style={{ width: "min(470px, 100vw)" }}
-      className="desktop relative hidden flex-col h-[400px] justify-center mx-auto items-center xs:flex"
+      style={{ paddingBottom: `100%` }}
+      className="desktop relative hidden flex-col justify-center items-center xs:flex border border-slate-200"
     >
       {props.children}
     </div>
@@ -36,7 +36,7 @@ function PostImage(props: { title: string; image: string }) {
   const { title, image } = props;
   return (
     <Image
-      className="object-cover mx-auto"
+      className="object-contain xs:object-cover"
       fill={true}
       alt={title}
       src={image}
@@ -109,15 +109,13 @@ export function Posts() {
     }, []);
   }, [data]);
 
-  // console.log("page", isFetching, isLoading, hasNextPage, error);
-
   return (
     <>
       <ul className="flex flex-col mt-small items-center">
         {posts?.map((post: any) => (
           <li
             key={post.id}
-            className="max-w-md py-small xs:px-gutter border-b border-slate-200 w-full"
+            className="max-w-md py-small xs:mx-gutter border-b border-slate-200 w-full"
           >
             <div className="flex flex-col gap-small w-full justify-center">
               <span className="px-gutter xs:px-0 flex gap-small w-full items-center">
