@@ -66,8 +66,13 @@ export async function GET(request: Request) {
   }
 
   const posts = await fetchPosts();
-  console.log("Fetching users", `${baseUrl}api/users`);
-  const users = await fetch(`${baseUrl}api/users`).then((res) => res.json());
+  console.log(
+    "Fetching users",
+    `http:localhost:${process.env.PORT || 3000}/api/users`
+  );
+  const users = await fetch(
+    `http:localhost:${process.env.PORT || 3000}/api/users`
+  ).then((res) => res.json());
   // Fetch comments for each post
   const postsWithComments = await Promise.all(
     posts
