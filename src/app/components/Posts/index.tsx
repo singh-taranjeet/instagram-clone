@@ -25,7 +25,7 @@ function DesktopImageContainer(props: { children: React.ReactNode }) {
   return (
     <div
       style={{ paddingBottom: `100%` }}
-      className="desktop relative hidden flex-col justify-center items-center xs:flex border border-slate-200"
+      className="desktop relative hidden flex-col justify-center items-center xs:flex sm:border border-slate-200"
     >
       {props.children}
     </div>
@@ -36,7 +36,7 @@ function PostImage(props: { title: string; image: string }) {
   const { title, image } = props;
   return (
     <Image
-      className="object-contain xs:object-cover"
+      className="object-contain sm:object-cover"
       fill={true}
       alt={title}
       src={image}
@@ -118,7 +118,7 @@ export function Posts() {
             className="max-w-md py-small xs:mx-gutter border-b border-slate-200 w-full"
           >
             <div className="flex flex-col gap-small w-full justify-center">
-              <span className="px-gutter xs:px-0 flex gap-small w-full items-center">
+              <span className="px-gutter ls:px-0 flex gap-small w-full items-center">
                 <Image
                   width={32}
                   height={32}
