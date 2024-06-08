@@ -3,7 +3,7 @@ import {
   QueryClient,
   HydrationBoundary,
 } from "@tanstack/react-query";
-import { getQueryClient, queries } from "./utils";
+import { queries } from "./utils";
 import { Status } from "./components/Status";
 import { Posts } from "./components/Posts";
 
@@ -18,11 +18,7 @@ export default async function Home() {
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["posts"],
     queryFn: queries.fetchPosts,
-    getNextPageParam: (lastPage: any, pages: any) => {
-      return pages.length;
-    },
-    initialPageParam: 0, // Provide the initialPageParam value
-    //placeholderData: keepPreviousData,
+    initialPageParam: 0,
   });
 
   return (

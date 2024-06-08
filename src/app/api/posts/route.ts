@@ -2,7 +2,7 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const id = Number(searchParams.get("page")) || 0;
 
-  console.log("page", id, request.url);
+  // console.log("page", id, request.url);
   function fetchPosts() {
     return fetch("https://jsonplaceholder.typicode.com/posts").then((res) =>
       res.json()
@@ -59,8 +59,6 @@ export async function GET(request: Request) {
     res.json()
   );
   // Fetch comments for each post
-  console.log("Start", id * 10);
-  console.log("To", (id + 1) * 10);
   const postsWithComments = await Promise.all(
     posts
       .slice(Number(id) * 10, (Number(id) + 1) * 10)

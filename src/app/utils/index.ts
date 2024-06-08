@@ -2,16 +2,20 @@
 import { QueryClient } from "@tanstack/react-query";
 import { cache } from "react";
 
+const baseUrl =
+  typeof window === "undefined"
+    ? "http://localhost:3000/"
+    : window?.location?.href;
+
 export const queries = {
   fetchUsers: () => {
-    return fetch(`${window.location.href}api/users`).then((res) => res.json());
+    return fetch(`${baseUrl}api/users`).then((res) => res.json());
   },
   fetchPosts: async (pageParam: any) => {
     const res = await fetch(
-      `${window.location.href}api/posts?page=${pageParam.pageParam}`
+      `${baseUrl}api/posts?page=${pageParam.pageParam}`
     ).then((r) => r.json());
+
     return res;
   },
 };
-
-export const getQueryClient = cache(() => new QueryClient());
