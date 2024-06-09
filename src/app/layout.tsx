@@ -21,9 +21,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ReactQueryProvider>
-          <Navbar></Navbar>
-          {children}
-          <Footer></Footer>
+          <div className="flex">
+            <Navbar></Navbar>
+            <div className="flex-1">{children}</div>
+            <Footer></Footer>
+          </div>
         </ReactQueryProvider>
       </body>
     </html>

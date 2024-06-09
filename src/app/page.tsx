@@ -23,8 +23,10 @@ export default async function Home() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Status />
-      <Posts />
+      <main>
+        <Status />
+        <Posts />
+      </main>
     </HydrationBoundary>
   );
 }
