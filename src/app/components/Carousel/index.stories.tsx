@@ -1,17 +1,36 @@
-"use client";
+import type { Meta, StoryObj } from "@storybook/react";
 import Image from "next/image";
-import { queries } from "@/app/utils";
-import { useQuery } from "@tanstack/react-query";
-import { Carousel } from "../Carousel";
 
-export function Status() {
-  const { data } = useQuery({
-    queryKey: ["users"],
-    queryFn: queries.fetchUsers,
-  });
+import { Carousel } from "./index";
 
-  return (
-    <div className="md:m-0 mt-11 sm:mt-small justify-center gap-small border-y sm:border-0 py-small border-slate-200">
+const meta = {} satisfies Meta<typeof Carousel>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  render: () => {
+    const data = [
+      {
+        name: "Taranjeet Singh",
+        image: "user-1.png",
+      },
+      {
+        name: "Ranjodhbir Singh",
+        image: "user-2.png",
+      },
+      {
+        name: "Amandeep Singh",
+        image: "user-3.png",
+      },
+      {
+        name: "John Doe",
+        image: "user-4.png",
+      },
+    ];
+
+    return (
       <Carousel.Wrapper>
         <Carousel.Button direction="prev" />
         <Carousel.Body>
@@ -32,6 +51,6 @@ export function Status() {
         </Carousel.Body>
         <Carousel.Button direction="next" />
       </Carousel.Wrapper>
-    </div>
-  );
-}
+    );
+  },
+};
