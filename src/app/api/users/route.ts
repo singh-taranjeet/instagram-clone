@@ -18,5 +18,69 @@ export async function GET() {
       name: "John Doe",
       image: images[3],
     },
+    {
+      name: "Taranjeet Singh1",
+      image: images[0],
+    },
+    {
+      name: "Ranjodhbir Singh1",
+      image: images[1],
+    },
+    {
+      name: "Amandeep Singh1",
+      image: images[2],
+    },
+    {
+      name: "John Doe1",
+      image: images[3],
+    },
+    {
+      name: "Taranjeet Singh2",
+      image: images[0],
+    },
+    {
+      name: "Ranjodhbir Singh2",
+      image: images[1],
+    },
+    {
+      name: "Amandeep Singh2",
+      image: images[2],
+    },
+    {
+      name: "John Doe2",
+      image: images[3],
+    },
+    {
+      name: "Taranjeet Singh3",
+      image: images[0],
+    },
+    {
+      name: "Ranjodhbir Singh3",
+      image: images[1],
+    },
+    {
+      name: "Amandeep Singh3",
+      image: images[2],
+    },
+    {
+      name: "John Doe3",
+      image: images[3],
+    },
+    {
+      name: "Taranjeet Singh4",
+      image: images[0],
+    },
+    {
+      name: "Ranjodhbir Singh4",
+      image: images[1],
+    },
+    {
+      name: "Amandeep Singh4",
+      image: images[2],
+    },
+    {
+      name: "John Doe4",
+      image: images[3],
+    },
   ]);
 }

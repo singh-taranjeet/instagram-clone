@@ -9,24 +9,90 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const images = ["user-1.png", "user-2.png", "user-3.png", "user-4.png"];
+
 export const Default: Story = {
   render: () => {
     const data = [
       {
         name: "Taranjeet Singh",
-        image: "user-1.png",
+        image: images[0],
       },
       {
         name: "Ranjodhbir Singh",
-        image: "user-2.png",
+        image: images[1],
       },
       {
         name: "Amandeep Singh",
-        image: "user-3.png",
+        image: images[2],
       },
       {
         name: "John Doe",
-        image: "user-4.png",
+        image: images[3],
+      },
+      {
+        name: "Taranjeet Singh1",
+        image: images[0],
+      },
+      {
+        name: "Ranjodhbir Singh1",
+        image: images[1],
+      },
+      {
+        name: "Amandeep Singh1",
+        image: images[2],
+      },
+      {
+        name: "John Doe1",
+        image: images[3],
+      },
+      {
+        name: "Taranjeet Singh2",
+        image: images[0],
+      },
+      {
+        name: "Ranjodhbir Singh2",
+        image: images[1],
+      },
+      {
+        name: "Amandeep Singh2",
+        image: images[2],
+      },
+      {
+        name: "John Doe2",
+        image: images[3],
+      },
+      {
+        name: "Taranjeet Singh3",
+        image: images[0],
+      },
+      {
+        name: "Ranjodhbir Singh3",
+        image: images[1],
+      },
+      {
+        name: "Amandeep Singh3",
+        image: images[2],
+      },
+      {
+        name: "John Doe3",
+        image: images[3],
+      },
+      {
+        name: "Taranjeet Singh4",
+        image: images[0],
+      },
+      {
+        name: "Ranjodhbir Singh4",
+        image: images[1],
+      },
+      {
+        name: "Amandeep Singh4",
+        image: images[2],
+      },
+      {
+        name: "John Doe4",
+        image: images[3],
       },
     ];
 
