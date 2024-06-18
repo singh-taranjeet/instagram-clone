@@ -98,24 +98,20 @@ export const Default: Story = {
 
     return (
       <Carousel.Wrapper>
-        <Carousel.Button direction="prev" />
-        <Carousel.Body>
-          {data.map((user: any, index: number) => (
-            <div
-              key={index}
-              className="min-w-16 h-16 rounded-full bg-slate-200 flex justify-center items-center cursor-pointer"
-            >
-              <Image
-                className="rounded-full"
-                src={`/users/${user.image}`}
-                alt={user.name}
-                width={56}
-                height={56}
-              />
-            </div>
-          ))}
-        </Carousel.Body>
-        <Carousel.Button direction="next" />
+        {data.map((user: any, index: number) => (
+          <div
+            key={index}
+            className="flex justify-center items-center cursor-pointer"
+          >
+            <Image
+              className="rounded-full min-w-16 h-16 bg-slate-200 "
+              src={`/users/${user.image}`}
+              alt={user.name}
+              width={56}
+              height={56}
+            />
+          </div>
+        ))}
       </Carousel.Wrapper>
     );
   },
