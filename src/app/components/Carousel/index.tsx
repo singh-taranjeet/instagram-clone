@@ -1,10 +1,10 @@
 "use client";
+import { MutableRefObject, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./styles.css";
 import { Icon } from "../Icon";
-import { MutableRefObject, useRef } from "react";
 import { breakPoints, useScreenSize } from "@/app/utils/hooks/useScreenSize";
 
 function CarouselItem(props: Readonly<{ children: React.ReactNode }>) {

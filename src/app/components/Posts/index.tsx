@@ -61,7 +61,7 @@ function Carousel(props: { title: string; images: string[] }) {
   }
 
   return (
-    <div {...handlers}>
+    <div {...handlers} className="overflow-clip">
       {images.length && currentImageIndex === 0 ? null : (
         <CarouselButton direction="prev" onClick={() => onClick("prev")} />
       )}
@@ -205,18 +205,6 @@ export function Posts() {
       return [...acc, ...page];
     }, []);
   }, [data]);
-
-  // const sliderRef = useRef<Slider | null>(null);
-  // const sliderSettings = {
-  //   dots: true,
-  //   infinite: true,
-  //   draggable: true,
-  //   touchMove: true,
-  //   initialSlide: 0,
-  //   swipeToSlide: true,
-  //   nextArrow: <Carousel.Button sliderRef={sliderRef} direction="next" />,
-  //   prevArrow: <Carousel.Button sliderRef={sliderRef} direction="prev" />,
-  // };
 
   return (
     <>
