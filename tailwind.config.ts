@@ -8,6 +8,20 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      keyframes: {
+        slideRight: {
+          "0%": { transform: "translateX(100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        slideLeft: {
+          "100%": { transform: "translateX(0%)" },
+          "0%": { transform: "translateX(-100%)" },
+        },
+      },
+      animation: {
+        slideRight: "slideRight 0.5s ease-in-out",
+        slideLeft: "slideLeft 0.5s ease-in-out",
+      },
       spacing: {
         gutter: "1rem",
         small: "0.75rem", // => 12px

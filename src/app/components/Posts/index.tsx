@@ -32,42 +32,52 @@ function Carousel(props: { title: string; images: string[] }) {
   const { title, images } = props;
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentDirection, setCurrentDirection] = useState<
+    "next" | "prev" | undefined
+  >();
 
   const handlers = useSwipeable({
-    onSwiped: (eventData) => console.log("User Swiped!", eventData),
+    onSwiped: (eventData) => {
+      console.log("User Swiped!", eventData.dir);
+      if (eventData.dir === "Left") {
+        onClick("next");
+      } else if (eventData.dir === "Right") {
+        onClick("prev");
+      }
+    },
   });
 
   function onClick(direction: "next" | "prev") {
-    console.log("CLick");
     if (direction === "next" && currentImageIndex >= images.length - 1) {
       return;
     }
     if (direction === "prev" && currentImageIndex === 0) {
       return;
     }
+    setCurrentDirection(direction);
     direction === "next"
       ? setCurrentImageIndex(currentImageIndex + 1)
       : setCurrentImageIndex(currentImageIndex - 1);
   }
 
   return (
-    <>
-      {currentImageIndex === 0 ? null : (
+    <div {...handlers}>
+      {images.length && currentImageIndex === 0 ? null : (
         <CarouselButton direction="prev" onClick={() => onClick("prev")} />
       )}
       {images.map((image, index) => (
         <PostImage
-          handlers={handlers}
           visible={currentImageIndex === index}
           key={index}
-          title={title}
+          direction={currentDirection}
+          title={`${title} - ${index}`}
           image={`/posts/${image}`}
         />
       ))}
-      {currentImageIndex === images.length - 1 ? null : (
+      {images.length && currentImageIndex === images.length - 1 ? null : (
         <CarouselButton direction="next" onClick={() => onClick("next")} />
       )}
-    </>
+    </div>
   );
 }
 
@@ -88,9 +98,7 @@ function DesktopImageContainer(props: { children: React.ReactNode }) {
       style={{ paddingBottom: `100%` }}
       className="desktop relative hidden flex-col justify-center items-center xs:flex sm:border border-slate-200"
     >
-      <CarouselButton direction="prev" />
       {props.children}
-      <CarouselButton direction="next" />
     </div>
   );
 }
@@ -99,13 +107,18 @@ function PostImage(props: {
   title: string;
   image: string;
   visible: boolean;
-  handlers: SwipeableHandlers;
+  direction?: "next" | "prev";
 }) {
   const { title, image, visible } = props;
+  const slideDirection =
+    typeof props.direction === "undefined"
+      ? ""
+      : props.direction === "next" && typeof props.direction !== undefined
+        ? "animate-slideRight"
+        : "animate-slideLeft";
   return (
     <Image
-      {...props.handlers}
-      className={`object-contain sm:object-cover ${visible ? "block" : "hidden"}`}
+      className={`object-contain sm:object-cover ${slideDirection} ${visible ? "block" : "hidden"}`}
       fill={true}
       alt={title}
       src={image}
