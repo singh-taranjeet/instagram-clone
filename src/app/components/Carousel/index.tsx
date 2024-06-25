@@ -47,7 +47,6 @@ export default function CarouselWrapper(
   const settings = {
     className: "center",
     infinite: true,
-    // arrows: false,
     centerMode: true,
     draggable: true,
     touchMove: true,
@@ -57,11 +56,6 @@ export default function CarouselWrapper(
     nextArrow: <CarouselButton sliderRef={sliderRef} direction="next" />,
     prevArrow: <CarouselButton sliderRef={sliderRef} direction="prev" />,
     centerPadding: "-30px",
-    // afterChange: function (index: number) {
-    //   console.log(
-    //     `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
-    //   );
-    // },
     responsive: [
       {
         breakpoint: breakPoints["2xl"],

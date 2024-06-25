@@ -5,7 +5,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import { Icon } from "../Icon";
 import React from "react";
-import { SwipeableHandlers, useSwipeable } from "react-swipeable";
+import { useSwipeable } from "react-swipeable";
 
 function CarouselButton(props: {
   direction: "next" | "prev";
