@@ -2,8 +2,9 @@
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "./styles.css";
 import { Icon } from "../Icon";
-import { useRef } from "react";
+import { MutableRefObject, useRef } from "react";
 import { breakPoints, useScreenSize } from "@/app/utils/hooks/useScreenSize";
 
 function CarouselItem(props: Readonly<{ children: React.ReactNode }>) {
@@ -40,7 +41,7 @@ export default function CarouselWrapper(
   props: Readonly<{ children: React.ReactNode }>
 ) {
   const width = useScreenSize();
-
+  const sliderRef = useRef<Slider | null>(null);
   console.log("No of slides to show: ", slidesToShow(width), width);
 
   const settings = {
@@ -53,8 +54,8 @@ export default function CarouselWrapper(
     initialSlide: 0,
     slidesToShow: 5,
     swipeToSlide: true,
-    nextArrow: <CarouselButton direction="next" />,
-    prevArrow: <CarouselButton direction="prev" />,
+    nextArrow: <CarouselButton sliderRef={sliderRef} direction="next" />,
+    prevArrow: <CarouselButton sliderRef={sliderRef} direction="prev" />,
     centerPadding: "-30px",
     // afterChange: function (index: number) {
     //   console.log(
@@ -62,6 +63,12 @@ export default function CarouselWrapper(
     //   );
     // },
     responsive: [
+      {
+        breakpoint: breakPoints["2xl"],
+        settings: {
+          slidesToShow: 10,
+        },
+      },
       {
         breakpoint: breakPoints.xl,
         settings: {
@@ -95,32 +102,6 @@ export default function CarouselWrapper(
     ],
   };
 
-  const sliderRef = useRef<Slider | null>(null);
-
-  function CarouselButton(props: Readonly<{ direction: "next" | "prev" }>) {
-    function onClick() {
-      if (props.direction === "next") {
-        sliderRef?.current?.slickNext();
-      } else {
-        sliderRef?.current?.slickPrev();
-      }
-    }
-
-    return (
-      <button
-        onClick={onClick}
-        className={`shadow z-10 mx-small absolute bg-white flex justify-center items-center !w-5 !h-5 transition-all duration-500 rounded-full !-translate-y-8 -bottom-[5px] ${
-          props.direction === "next" ? "right-0" : "left-0"
-        }`}
-        data-carousel-next
-      >
-        <i className={props.direction === "next" ? "-rotate-90" : "rotate-90"}>
-          <Icon.Down className="text-slate-200" />
-        </i>
-      </button>
-    );
-  }
-
   return (
     <div className="max-w-screen-xs sm:max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg  mx-auto">
       <Slider ref={sliderRef} {...settings}>
@@ -130,8 +111,39 @@ export default function CarouselWrapper(
   );
 }
 
+function CarouselButton(
+  props: Readonly<{
+    direction: "next" | "prev";
+    sliderRef: MutableRefObject<Slider | null>;
+  }>
+) {
+  function onClick() {
+    console.log("on click", props.sliderRef);
+    if (props.direction === "next") {
+      props.sliderRef?.current?.slickNext();
+    } else {
+      props.sliderRef?.current?.slickPrev();
+    }
+  }
+
+  return (
+    <button
+      onClick={onClick}
+      className={`shadow z-10 mx-small absolute bg-white flex justify-center items-center !w-5 !h-5 transition-all duration-500 rounded-full !-translate-y-8 -bottom-[5px] ${
+        props.direction === "next" ? "right-0" : "left-0"
+      }`}
+      data-carousel-next
+    >
+      <i className={props.direction === "next" ? "-rotate-90" : "rotate-90"}>
+        <Icon.Down className="text-slate-200" />
+      </i>
+    </button>
+  );
+}
+
 export const Carousel = {
   Item: CarouselItem,
   Wrapper: CarouselWrapper,
   Body: CarouselBody,
+  Button: CarouselButton,
 };

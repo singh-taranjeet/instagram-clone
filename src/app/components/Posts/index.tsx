@@ -1,15 +1,16 @@
 "use client";
 import { queries } from "@/app/utils";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import { Icon } from "../Icon";
 import React from "react";
-
+import Slider from "react-slick";
+import { Carousel } from "../Carousel";
 function MobileImageContainer(props: { children: React.ReactNode }) {
   return (
     <div
-      style={{ width: "min(420px, 100vw)", paddingBottom: `100%` }}
+      style={{ paddingBottom: `100%`, width: "min(420px, 100vw)" }}
       className="mobile relative flex flex-col justify-center items-center xs:hidden"
     >
       {props.children}
@@ -88,6 +89,21 @@ function LoadMore(props: { nextPage(): void; isFetching: boolean }) {
   );
 }
 
+function ImageWrapper(props: { title: string; image: string }) {
+  const { title, image } = props;
+  return (
+    <React.Fragment>
+      <MobileImageContainer>
+        <PostImage title={title} image={`/posts/${image}`} />
+      </MobileImageContainer>
+
+      <DesktopImageContainer>
+        <PostImage title={title} image={`/posts/${image}`} />
+      </DesktopImageContainer>
+    </React.Fragment>
+  );
+}
+
 export function Posts() {
   const { data, error, fetchNextPage, hasNextPage, isFetching, isLoading } =
     useInfiniteQuery({
@@ -105,13 +121,25 @@ export function Posts() {
     }, []);
   }, [data]);
 
+  const sliderRef = useRef<Slider | null>(null);
+  const sliderSettings = {
+    dots: true,
+    infinite: true,
+    draggable: true,
+    touchMove: true,
+    initialSlide: 0,
+    swipeToSlide: true,
+    nextArrow: <Carousel.Button sliderRef={sliderRef} direction="next" />,
+    prevArrow: <Carousel.Button sliderRef={sliderRef} direction="prev" />,
+  };
+
   return (
     <>
       <ul className="flex flex-col mt-small items-center">
         {posts?.map((post: any) => (
           <li
             key={post.id}
-            className="max-w-md py-small xs:mx-gutter border-b border-slate-200 w-full"
+            className="max-w-sm py-small xs:mx-gutter border-b border-slate-200"
           >
             <div className="flex flex-col gap-small w-full justify-center">
               <span className="px-gutter ls:px-0 flex gap-small w-full items-center">
@@ -123,20 +151,15 @@ export function Posts() {
                 />
                 {post.user.name}
               </span>
-
-              <MobileImageContainer>
-                <PostImage
-                  title={post.title}
-                  image={`/posts/${post.images?.[0]}`}
-                />
-              </MobileImageContainer>
-
-              <DesktopImageContainer>
-                <PostImage
-                  title={post.title}
-                  image={`/posts/${post.images?.[0]}`}
-                />
-              </DesktopImageContainer>
+              {post.images.length > 100 ? (
+                <Slider ref={sliderRef} {...sliderSettings}>
+                  {post.images.map((image: string, key: number) => (
+                    <ImageWrapper key={key} title={post.title} image={image} />
+                  ))}
+                </Slider>
+              ) : (
+                <ImageWrapper title={post.title} image={post.images[0]} />
+              )}
 
               <div className="flex gap-small mx-gutter">
                 <Icon.Fav />

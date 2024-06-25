@@ -57,6 +57,7 @@ export async function GET(request: Request) {
   // get random number of elements from images array for input i
   function getRandomImages() {
     const i = randomNumber();
+    console.log("Number of images", i);
     const randomImages = [];
     const shuffledImages = shuffle(images);
     for (let j = 0; j < i; j++) {
