@@ -5,8 +5,72 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import { Icon } from "../Icon";
 import React from "react";
-import Slider from "react-slick";
-import { Carousel } from "../Carousel";
+import { SwipeableHandlers, useSwipeable } from "react-swipeable";
+
+function CarouselButton(props: {
+  direction: "next" | "prev";
+  onClick: () => void;
+}) {
+  return (
+    <button
+      id={`carousel-${props.direction}`}
+      className={`shadow p-4 z-10 mx-small absolute bg-slate-50 bg-opacity-50 flex justify-center items-center !w-5 !h-5 transition-all duration-500 rounded-full bottom-1/2 ${
+        props.direction === "next" ? "right-0" : "left-0"
+      }`}
+      onClick={props.onClick}
+    >
+      <i
+        className={`${props.direction === "next" ? "-rotate-90" : "rotate-90"}`}
+      >
+        <Icon.Arrow className="text-slate-200" />
+      </i>
+    </button>
+  );
+}
+
+function Carousel(props: { title: string; images: string[] }) {
+  const { title, images } = props;
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => console.log("User Swiped!", eventData),
+  });
+
+  function onClick(direction: "next" | "prev") {
+    console.log("CLick");
+    if (direction === "next" && currentImageIndex >= images.length - 1) {
+      return;
+    }
+    if (direction === "prev" && currentImageIndex === 0) {
+      return;
+    }
+    direction === "next"
+      ? setCurrentImageIndex(currentImageIndex + 1)
+      : setCurrentImageIndex(currentImageIndex - 1);
+  }
+
+  return (
+    <>
+      {currentImageIndex === 0 ? null : (
+        <CarouselButton direction="prev" onClick={() => onClick("prev")} />
+      )}
+      {images.map((image, index) => (
+        <PostImage
+          handlers={handlers}
+          visible={currentImageIndex === index}
+          key={index}
+          title={title}
+          image={`/posts/${image}`}
+        />
+      ))}
+      {currentImageIndex === images.length - 1 ? null : (
+        <CarouselButton direction="next" onClick={() => onClick("next")} />
+      )}
+    </>
+  );
+}
+
 function MobileImageContainer(props: { children: React.ReactNode }) {
   return (
     <div
@@ -24,16 +88,24 @@ function DesktopImageContainer(props: { children: React.ReactNode }) {
       style={{ paddingBottom: `100%` }}
       className="desktop relative hidden flex-col justify-center items-center xs:flex sm:border border-slate-200"
     >
+      <CarouselButton direction="prev" />
       {props.children}
+      <CarouselButton direction="next" />
     </div>
   );
 }
 
-function PostImage(props: { title: string; image: string }) {
-  const { title, image } = props;
+function PostImage(props: {
+  title: string;
+  image: string;
+  visible: boolean;
+  handlers: SwipeableHandlers;
+}) {
+  const { title, image, visible } = props;
   return (
     <Image
-      className="object-contain sm:object-cover"
+      {...props.handlers}
+      className={`object-contain sm:object-cover ${visible ? "block" : "hidden"}`}
       fill={true}
       alt={title}
       src={image}
@@ -89,16 +161,16 @@ function LoadMore(props: { nextPage(): void; isFetching: boolean }) {
   );
 }
 
-function ImageWrapper(props: { title: string; image: string }) {
-  const { title, image } = props;
+function ImageWrapper(props: { title: string; images: string[] }) {
+  const { title, images } = props;
   return (
     <React.Fragment>
       <MobileImageContainer>
-        <PostImage title={title} image={`/posts/${image}`} />
+        <Carousel title={title} images={images} />
       </MobileImageContainer>
 
       <DesktopImageContainer>
-        <PostImage title={title} image={`/posts/${image}`} />
+        <Carousel title={title} images={images} />
       </DesktopImageContainer>
     </React.Fragment>
   );
@@ -121,17 +193,17 @@ export function Posts() {
     }, []);
   }, [data]);
 
-  const sliderRef = useRef<Slider | null>(null);
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    draggable: true,
-    touchMove: true,
-    initialSlide: 0,
-    swipeToSlide: true,
-    nextArrow: <Carousel.Button sliderRef={sliderRef} direction="next" />,
-    prevArrow: <Carousel.Button sliderRef={sliderRef} direction="prev" />,
-  };
+  // const sliderRef = useRef<Slider | null>(null);
+  // const sliderSettings = {
+  //   dots: true,
+  //   infinite: true,
+  //   draggable: true,
+  //   touchMove: true,
+  //   initialSlide: 0,
+  //   swipeToSlide: true,
+  //   nextArrow: <Carousel.Button sliderRef={sliderRef} direction="next" />,
+  //   prevArrow: <Carousel.Button sliderRef={sliderRef} direction="prev" />,
+  // };
 
   return (
     <>
@@ -151,15 +223,8 @@ export function Posts() {
                 />
                 {post.user.name}
               </span>
-              {post.images.length > 100 ? (
-                <Slider ref={sliderRef} {...sliderSettings}>
-                  {post.images.map((image: string, key: number) => (
-                    <ImageWrapper key={key} title={post.title} image={image} />
-                  ))}
-                </Slider>
-              ) : (
-                <ImageWrapper title={post.title} image={post.images[0]} />
-              )}
+
+              <ImageWrapper title={post.title} images={post.images} />
 
               <div className="flex gap-small mx-gutter">
                 <Icon.Fav />

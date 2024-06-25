@@ -12,6 +12,7 @@ export const Icon = {
   Posts: PostsIcon,
   Share: ShareIcon,
   BookMark: BookMarkIcon,
+  Arrow: ArrowIcon,
 };
 
 function SmallLogo(props: { label?: string; className?: string }) {
@@ -186,6 +187,23 @@ function DownIcon(props: { label?: string; className?: string }) {
       width="12"
     >
       <title>Down Chevron Icon</title>
+      <path d="M12 17.502a1 1 0 0 1-.707-.293l-9-9.004a1 1 0 0 1 1.414-1.414L12 15.087l8.293-8.296a1 1 0 0 1 1.414 1.414l-9 9.004a1 1 0 0 1-.707.293Z"></path>
+    </svg>
+  );
+}
+
+function ArrowIcon(props: { label?: string; className?: string }) {
+  return (
+    <svg
+      aria-label={props.label || "Arrow Chevron Icon"}
+      className={`${props.className || ""}`}
+      fill="currentColor"
+      height="12"
+      role="img"
+      viewBox="0 0 24 24"
+      width="12"
+    >
+      <title>Arrow Chevron Icon</title>
       <path d="M12 17.502a1 1 0 0 1-.707-.293l-9-9.004a1 1 0 0 1 1.414-1.414L12 15.087l8.293-8.296a1 1 0 0 1 1.414 1.414l-9 9.004a1 1 0 0 1-.707.293Z"></path>
     </svg>
   );
