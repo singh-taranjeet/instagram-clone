@@ -71,7 +71,7 @@ function Carousel(props: { title: string; images: string[] }) {
           key={index}
           direction={currentDirection}
           title={`${title} - ${index}`}
-          image={`/posts/${image}`}
+          image={`${image}`}
         />
       ))}
       {images.length && currentImageIndex === images.length - 1 ? null : (
@@ -121,7 +121,7 @@ function PostImage(props: {
       className={`object-contain sm:object-cover ${slideDirection} ${visible ? "block" : "hidden"}`}
       fill={true}
       alt={title}
-      src={image}
+      src={`/posts/${image}`}
     />
   );
 }
@@ -206,6 +206,8 @@ export function Posts() {
     }, []);
   }, [data]);
 
+  console.log("Posts", posts);
+
   return (
     <>
       <ul className="flex flex-col mt-small items-center">
@@ -220,7 +222,7 @@ export function Posts() {
                   width={32}
                   height={32}
                   alt="dsf"
-                  src={`/users/${post.user?.image}`}
+                  src={`${post.user.profileUrl}`}
                 />
                 {post.user.name}
               </span>

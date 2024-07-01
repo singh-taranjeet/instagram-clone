@@ -20,7 +20,7 @@ export function Status() {
           >
             <Image
               className="rounded-full min-w-16 h-16 border-2 border-pink-200"
-              src={`/users/${user.image}`}
+              src={`${user.profileUrl}`}
               alt={user.name}
               width={56}
               height={56}
