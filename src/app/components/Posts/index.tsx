@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Icon } from "../Icon";
 import React from "react";
 import { useSwipeable } from "react-swipeable";
+import { gql, useQuery } from "@apollo/client";
 
 function CarouselButton(props: {
   direction: "next" | "prev";
@@ -189,7 +190,21 @@ function ImageWrapper(props: { title: string; images: string[] }) {
   );
 }
 
+const GET_POSTS = gql`
+  query Posts($page: Float!) {
+    posts(page: $page) {
+      description
+      likes
+      media
+    }
+  }
+`;
+
 export function Posts() {
+  const postsGraph = useQuery(GET_POSTS, { variables: { page: 0 } });
+
+  console.log("Posts Graph", postsGraph.data);
+
   const { data, error, fetchNextPage, hasNextPage, isFetching, isLoading } =
     useInfiniteQuery({
       queryKey: ["posts"],
@@ -206,7 +221,7 @@ export function Posts() {
     }, []);
   }, [data]);
 
-  console.log("Posts", posts);
+  //console.log("Posts", data);
 
   return (
     <>
@@ -251,6 +266,7 @@ export function Posts() {
           </li>
         ))}
       </ul>
+
       <LoadMore isFetching={isFetching} nextPage={fetchNextPage} />
     </>
   );

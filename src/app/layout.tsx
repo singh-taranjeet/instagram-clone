@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import ReactQueryProvider from "./components/ReactQueryProvider";
+import { ApolloClientProvider } from "./components/ApolloClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,13 +21,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ReactQueryProvider>
-          <div className="flex">
-            <Navbar></Navbar>
-            <div className="flex-1">{children}</div>
-            <Footer></Footer>
-          </div>
-        </ReactQueryProvider>
+        <ApolloClientProvider>
+          <ReactQueryProvider>
+            <div className="flex">
+              <Navbar></Navbar>
+              <div className="flex-1">{children}</div>
+              <Footer></Footer>
+            </div>
+          </ReactQueryProvider>
+        </ApolloClientProvider>
       </body>
     </html>
   );
