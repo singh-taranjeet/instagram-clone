@@ -11,13 +11,13 @@ export default async function Home() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["users"],
-    queryFn: queries.fetchUsers,
+    queryKey: [queries.fetchUsers.name],
+    queryFn: queries.fetchUsers.queryFn,
   });
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["posts"],
-    queryFn: queries.fetchPosts,
+    queryKey: [queries.fetchPosts.name],
+    queryFn: queries.fetchPosts.queryFn,
     initialPageParam: 0,
   });
 

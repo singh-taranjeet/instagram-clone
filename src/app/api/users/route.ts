@@ -4,7 +4,7 @@ export async function GET() {
   // fetch users from api: localhost:4000/users/
   const users = await fetch("http://localhost:5555/user/");
   const usersList = await users.json();
-  console.log("Users List", usersList);
+  // console.log("Users List", usersList);
   return Response.json(usersList);
 
   // return Response.json([

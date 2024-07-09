@@ -6,8 +6,8 @@ import Carousel from "../Carousel";
 
 export function Status() {
   const { data } = useQuery({
-    queryKey: ["users"],
-    queryFn: queries.fetchUsers,
+    queryKey: [queries.fetchUsers.name],
+    queryFn: queries.fetchUsers.queryFn,
   });
 
   return (

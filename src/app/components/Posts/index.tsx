@@ -209,17 +209,18 @@ interface PostType {
 export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
 
+  console.log("Posts", data, isFetching);
+
   const posts = useMemo(() => {
     return data?.pages.reduce((acc, page) => {
       return [...acc, ...page];
     }, []);
   }, [data]);
 
-  console.log("data", data, posts);
-
   return (
     <>
       <ul className="flex flex-col mt-small items-center">
+        <h1>Taranjeet Singh</h1>
         {posts?.map((post: PostType, index: number) => (
           <li
             key={`${post.id}-${index}`}
