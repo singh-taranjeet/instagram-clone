@@ -8,34 +8,11 @@ import { usePosts } from "@/app/utils/hooks/usePosts";
 import { Modal } from "../Modal";
 import { Media } from "./components/Media";
 import { LoadMore } from "./components/LoadMore";
-
-interface PostType {
-  id: string;
-  description: string;
-  likes: number;
-  user: {
-    _id: string;
-    name: string;
-    profileUrl: string;
-  };
-  comments: {
-    content: string;
-    user: string;
-  }[];
-  media: {
-    name: string;
-    url: string;
-  }[];
-}
-
-interface ModalType {
-  open: boolean;
-  selectedPost: PostType;
-}
-
-function getImages(media: { url: string; name: string }[]) {
-  return media.map((item) => item.url);
-}
+import { getImages } from "./utils";
+import { ModalType, PostType } from "./types";
+import { ExpandedView } from "./components/ExpandedView";
+import { ActionBar } from "./components/ActionBar";
+import { Author } from "./components/Author";
 
 export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
@@ -66,29 +43,15 @@ export function Posts() {
             className="max-w-sm py-small xs:mx-gutter border-b border-slate-200"
           >
             <div className="flex flex-col gap-small w-full justify-center">
-              <span className="px-gutter ls:px-0 flex gap-small w-full items-center">
-                <Image
-                  width={32}
-                  height={32}
-                  alt="dsf"
-                  src={`${post.user.profileUrl}`}
-                />
-                {post.user.name}
-              </span>
+              <Author name={post.user.name} profileUrl={post.user.profileUrl} />
 
               <Media.Wrapper
                 title={post.description}
                 images={getImages(post.media)}
               />
 
-              <div className="flex gap-small mx-gutter">
-                <Icon.Fav />
-                <Icon.Comment />
-                <Icon.Share />
-                <div className="ml-auto">
-                  <Icon.BookMark />
-                </div>
-              </div>
+              <ActionBar />
+
               <div className="flex flex-col mx-gutter">
                 <b className="text-sm">100 likes</b>
                 <span>
@@ -111,23 +74,9 @@ export function Posts() {
         <Modal.ModalBody>
           <Modal.ModalCloseIcon onClose={onModalClose} />
           <Modal.ModalContent>
-            <section className="grid grid-cols-2">
-              <Media.Wrapper
-                images={getImages(modal?.selectedPost.media || [])}
-                title={modal?.selectedPost.description || ""}
-              />
-              <section className="bg-white">
-                <h1>{modal?.selectedPost.description}</h1>
-                <div>
-                  {modal?.selectedPost.comments.map((comment, index) => (
-                    <div key={index}>
-                      <p>{comment.content}</p>
-                      <p>{comment.user}</p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            </section>
+            {modal?.selectedPost ? (
+              <ExpandedView selectedPost={modal.selectedPost} />
+            ) : null}
           </Modal.ModalContent>
         </Modal.ModalBody>
       </Modal.ModalDialog>

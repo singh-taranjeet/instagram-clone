@@ -3,6 +3,19 @@ export const baseUrl =
     ? "http://localhost:3000/"
     : window?.location?.href;
 
+async function fetchGraphQl(query: string) {
+  const data = await fetch("http://localhost:5555/graphql", {
+    method: "POST",
+    body: JSON.stringify({
+      query,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return data.json();
+}
+
 const post = {
   gql: function GET_POSTS_QUERY(page: number) {
     return `query Posts {
@@ -33,16 +46,7 @@ const post = {
   },
   fetch: async function fetchPost(page: number) {
     async function getPosts(page: number) {
-      const data = await fetch("http://localhost:5555/graphql", {
-        method: "POST",
-        body: JSON.stringify({
-          query: post.gql(page),
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      return data.json();
+      return fetchGraphQl(post.gql(page));
     }
 
     const { data } = await getPosts(page);

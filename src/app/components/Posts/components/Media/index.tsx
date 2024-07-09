@@ -17,7 +17,7 @@ function DesktopImageContainer(props: { children: React.ReactNode }) {
   return (
     <div
       style={{ paddingBottom: `100%` }}
-      className="desktop relative hidden flex-col justify-center items-center xs:flex sm:border border-slate-200"
+      className="desktop relative hidden flex-col justify-center items-center xs:flex"
     >
       {props.children}
     </div>
