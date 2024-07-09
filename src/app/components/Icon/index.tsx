@@ -13,6 +13,7 @@ export const Icon = {
   Share: ShareIcon,
   BookMark: BookMarkIcon,
   Arrow: ArrowIcon,
+  Cross: CrossIcon,
 };
 
 function SmallLogo(props: { label?: string; className?: string }) {
@@ -339,6 +340,41 @@ function PostsIcon(props: { label?: string; className?: string }) {
         d="M9.763 17.664a.908.908 0 0 1-.454-.787V11.63a.909.909 0 0 1 1.364-.788l4.545 2.624a.909.909 0 0 1 0 1.575l-4.545 2.624a.91.91 0 0 1-.91 0Z"
         fillRule="evenodd"
       ></path>
+    </svg>
+  );
+}
+
+function CrossIcon(props: { label?: string; className?: string }) {
+  return (
+    <svg
+      fill="currentColor"
+      aria-label={props.label || "Close"}
+      className={props.className || ""}
+      height="18"
+      role="img"
+      viewBox="0 0 24 24"
+      width="18"
+    >
+      <title>Close</title>
+      <polyline
+        fill="none"
+        points="20.643 3.357 12 12 3.353 20.647"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="3"
+      ></polyline>
+      <line
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="3"
+        x1="20.649"
+        x2="3.354"
+        y1="20.649"
+        y2="3.354"
+      ></line>
     </svg>
   );
 }

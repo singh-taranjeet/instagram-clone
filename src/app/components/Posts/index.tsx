@@ -3,189 +3,11 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import { Icon } from "../Icon";
 import React from "react";
-import { useSwipeable } from "react-swipeable";
+
 import { usePosts } from "@/app/utils/hooks/usePosts";
-
-function CarouselButton(props: {
-  direction: "next" | "prev";
-  onClick: () => void;
-}) {
-  return (
-    <button
-      id={`carousel-${props.direction}`}
-      className={`shadow p-4 z-10 mx-small absolute bg-slate-50 bg-opacity-50 flex justify-center items-center !w-5 !h-5 transition-all duration-500 rounded-full bottom-1/2 ${
-        props.direction === "next" ? "right-0" : "left-0"
-      }`}
-      onClick={props.onClick}
-    >
-      <i
-        className={`${props.direction === "next" ? "-rotate-90" : "rotate-90"}`}
-      >
-        <Icon.Arrow className="text-slate-200" />
-      </i>
-    </button>
-  );
-}
-
-function Carousel(props: { title: string; images: string[] }) {
-  const { title, images } = props;
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [currentDirection, setCurrentDirection] = useState<
-    "next" | "prev" | undefined
-  >();
-
-  const handlers = useSwipeable({
-    onSwiped: (eventData) => {
-      console.log("User Swiped!", eventData.dir);
-      if (eventData.dir === "Left") {
-        onClick("next");
-      } else if (eventData.dir === "Right") {
-        onClick("prev");
-      }
-    },
-  });
-
-  function onClick(direction: "next" | "prev") {
-    if (direction === "next" && currentImageIndex >= images.length - 1) {
-      return;
-    }
-    if (direction === "prev" && currentImageIndex === 0) {
-      return;
-    }
-    setCurrentDirection(direction);
-    direction === "next"
-      ? setCurrentImageIndex(currentImageIndex + 1)
-      : setCurrentImageIndex(currentImageIndex - 1);
-  }
-
-  return (
-    <div {...handlers} className="overflow-clip">
-      {images.length && currentImageIndex === 0 ? null : (
-        <CarouselButton direction="prev" onClick={() => onClick("prev")} />
-      )}
-      {images.map((image, index) => (
-        <PostImage
-          visible={currentImageIndex === index}
-          key={index}
-          direction={currentDirection}
-          title={`${title} - ${index}`}
-          image={`${image}`}
-        />
-      ))}
-      {images.length && currentImageIndex === images.length - 1 ? null : (
-        <CarouselButton direction="next" onClick={() => onClick("next")} />
-      )}
-    </div>
-  );
-}
-
-function MobileImageContainer(props: { children: React.ReactNode }) {
-  return (
-    <div
-      style={{ paddingBottom: `100%`, width: "min(420px, 100vw)" }}
-      className="mobile relative flex flex-col justify-center items-center xs:hidden"
-    >
-      {props.children}
-    </div>
-  );
-}
-
-function DesktopImageContainer(props: { children: React.ReactNode }) {
-  return (
-    <div
-      style={{ paddingBottom: `100%` }}
-      className="desktop relative hidden flex-col justify-center items-center xs:flex sm:border border-slate-200"
-    >
-      {props.children}
-    </div>
-  );
-}
-
-function PostImage(props: {
-  title: string;
-  image: string;
-  visible: boolean;
-  direction?: "next" | "prev";
-}) {
-  const { title, image, visible } = props;
-  const slideDirection =
-    typeof props.direction === "undefined"
-      ? ""
-      : props.direction === "next" && typeof props.direction !== undefined
-        ? "animate-slideRight"
-        : "animate-slideLeft";
-  return (
-    <Image
-      className={`object-contain sm:object-cover ${slideDirection} ${visible ? "block" : "hidden"}`}
-      fill={true}
-      alt={title}
-      src={image}
-    />
-  );
-}
-
-function useElementOnScreen(ref: any) {
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsVisible(entry.isIntersecting);
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 0.5,
-      }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, [ref]);
-
-  return isVisible;
-}
-
-function LoadMore(props: { nextPage(): void; isFetching: boolean }) {
-  const { nextPage, isFetching } = props;
-  const componentRef = useRef<HTMLDivElement | null>(null);
-  const isVisible = useElementOnScreen(componentRef);
-
-  useEffect(() => {
-    if (isVisible) {
-      nextPage();
-    }
-  }, [isVisible, nextPage]);
-
-  return (
-    <div ref={componentRef}>
-      {isFetching ? <div>Loading...</div> : <div>Swipe to load more</div>}
-    </div>
-  );
-}
-
-function ImageWrapper(props: { title: string; images: string[] }) {
-  const { title, images } = props;
-  return (
-    <React.Fragment>
-      <MobileImageContainer>
-        <Carousel title={title} images={images} />
-      </MobileImageContainer>
-
-      <DesktopImageContainer>
-        <Carousel title={title} images={images} />
-      </DesktopImageContainer>
-    </React.Fragment>
-  );
-}
+import { Modal } from "../Modal";
+import { Media } from "./components/Media";
+import { LoadMore } from "./components/LoadMore";
 
 interface PostType {
   id: string;
@@ -206,10 +28,28 @@ interface PostType {
   }[];
 }
 
+interface ModalType {
+  open: boolean;
+  selectedPost: PostType;
+}
+
+function getImages(media: { url: string; name: string }[]) {
+  return media.map((item) => item.url);
+}
+
 export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
+  const [modal, setModal] = useState<ModalType | undefined>(undefined);
 
-  console.log("Posts", data, isFetching);
+  console.log("modal", modal);
+
+  function onModalClose() {
+    setModal(undefined);
+  }
+
+  function onClickComments(post: PostType) {
+    setModal({ open: true, selectedPost: post });
+  }
 
   const posts = useMemo(() => {
     return data?.pages.reduce((acc, page) => {
@@ -220,7 +60,6 @@ export function Posts() {
   return (
     <>
       <ul className="flex flex-col mt-small items-center">
-        <h1>Taranjeet Singh</h1>
         {posts?.map((post: PostType, index: number) => (
           <li
             key={`${post.id}-${index}`}
@@ -237,9 +76,9 @@ export function Posts() {
                 {post.user.name}
               </span>
 
-              <ImageWrapper
+              <Media.Wrapper
                 title={post.description}
-                images={post.media.map((item) => item.url)}
+                images={getImages(post.media)}
               />
 
               <div className="flex gap-small mx-gutter">
@@ -256,7 +95,10 @@ export function Posts() {
                   <b className="text-sm">Taranjeet Singh</b>{" "}
                   {post?.comments?.[0]?.content || "No comments"}
                 </span>
-                <span className="text-sm text-slate-500">
+                <span
+                  className="text-sm text-slate-500"
+                  onClick={() => onClickComments(post)}
+                >
                   view all 150 comments
                 </span>
               </div>
@@ -264,6 +106,31 @@ export function Posts() {
           </li>
         ))}
       </ul>
+
+      <Modal.ModalDialog onClose={onModalClose} open={!!modal?.open}>
+        <Modal.ModalBody>
+          <Modal.ModalCloseIcon onClose={onModalClose} />
+          <Modal.ModalContent>
+            <section className="grid grid-cols-2">
+              <Media.Wrapper
+                images={getImages(modal?.selectedPost.media || [])}
+                title={modal?.selectedPost.description || ""}
+              />
+              <section className="bg-white">
+                <h1>{modal?.selectedPost.description}</h1>
+                <div>
+                  {modal?.selectedPost.comments.map((comment, index) => (
+                    <div key={index}>
+                      <p>{comment.content}</p>
+                      <p>{comment.user}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </section>
+          </Modal.ModalContent>
+        </Modal.ModalBody>
+      </Modal.ModalDialog>
 
       <LoadMore isFetching={isFetching} nextPage={fetchNextPage} />
     </>
