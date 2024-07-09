@@ -1,12 +1,10 @@
 "use client";
-import { queries } from "@/app/utils";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { useState, useEffect, useRef, useMemo } from "react";
 import Image from "next/image";
 import { Icon } from "../Icon";
 import React from "react";
 import { useSwipeable } from "react-swipeable";
-import { gql, useQuery } from "@apollo/client";
+import { usePosts } from "@/app/utils/hooks/usePosts";
 
 function CarouselButton(props: {
   direction: "next" | "prev";
@@ -122,7 +120,7 @@ function PostImage(props: {
       className={`object-contain sm:object-cover ${slideDirection} ${visible ? "block" : "hidden"}`}
       fill={true}
       alt={title}
-      src={`/posts/${image}`}
+      src={image}
     />
   );
 }
@@ -163,7 +161,6 @@ function LoadMore(props: { nextPage(): void; isFetching: boolean }) {
 
   useEffect(() => {
     if (isVisible) {
-      // console.log("Element is visible");
       nextPage();
     }
   }, [isVisible, nextPage]);
@@ -190,30 +187,27 @@ function ImageWrapper(props: { title: string; images: string[] }) {
   );
 }
 
-const GET_POSTS = gql`
-  query Posts($page: Float!) {
-    posts(page: $page) {
-      description
-      likes
-      media
-    }
-  }
-`;
+interface PostType {
+  id: string;
+  description: string;
+  likes: number;
+  user: {
+    _id: string;
+    name: string;
+    profileUrl: string;
+  };
+  comments: {
+    content: string;
+    user: string;
+  }[];
+  media: {
+    name: string;
+    url: string;
+  }[];
+}
 
 export function Posts() {
-  const postsGraph = useQuery(GET_POSTS, { variables: { page: 0 } });
-
-  console.log("Posts Graph", postsGraph.data);
-
-  const { data, error, fetchNextPage, hasNextPage, isFetching, isLoading } =
-    useInfiniteQuery({
-      queryKey: ["posts"],
-      queryFn: queries.fetchPosts,
-      getNextPageParam: (lastPage, pages) => {
-        return pages.length;
-      },
-      initialPageParam: 0, // Provide the initialPageParam value
-    });
+  const { data, fetchNextPage, isFetching } = usePosts();
 
   const posts = useMemo(() => {
     return data?.pages.reduce((acc, page) => {
@@ -221,14 +215,14 @@ export function Posts() {
     }, []);
   }, [data]);
 
-  //console.log("Posts", data);
+  console.log("data", data, posts);
 
   return (
     <>
       <ul className="flex flex-col mt-small items-center">
-        {posts?.map((post: any) => (
+        {posts?.map((post: PostType, index: number) => (
           <li
-            key={post.id}
+            key={`${post.id}-${index}`}
             className="max-w-sm py-small xs:mx-gutter border-b border-slate-200"
           >
             <div className="flex flex-col gap-small w-full justify-center">
@@ -242,7 +236,10 @@ export function Posts() {
                 {post.user.name}
               </span>
 
-              <ImageWrapper title={post.title} images={post.images} />
+              <ImageWrapper
+                title={post.description}
+                images={post.media.map((item) => item.url)}
+              />
 
               <div className="flex gap-small mx-gutter">
                 <Icon.Fav />
@@ -256,7 +253,7 @@ export function Posts() {
                 <b className="text-sm">100 likes</b>
                 <span>
                   <b className="text-sm">Taranjeet Singh</b>{" "}
-                  {post?.comments[0].name}
+                  {post?.comments?.[0]?.content || "No comments"}
                 </span>
                 <span className="text-sm text-slate-500">
                   view all 150 comments

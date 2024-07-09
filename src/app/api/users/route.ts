@@ -2,8 +2,9 @@ export async function GET() {
   // const images = ["user-1.png", "user-2.png", "user-3.png", "user-4.png"];
 
   // fetch users from api: localhost:4000/users/
-  const users = await fetch("http://localhost:4000/users/");
+  const users = await fetch("http://localhost:5555/user/");
   const usersList = await users.json();
+  console.log("Users List", usersList);
   return Response.json(usersList);
 
   // return Response.json([
