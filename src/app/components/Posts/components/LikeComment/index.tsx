@@ -1,5 +1,6 @@
 import { PostType } from "../../types";
 import { PostDetails } from "../Details";
+import { Likes } from "../Likes";
 
 interface Props {
   onClickComments: () => void;
@@ -8,11 +9,11 @@ interface Props {
 export function LikeComment(props: Props) {
   const { onClickComments, post } = props;
 
-  console.log("post", post);
-
   return (
     <div className="flex flex-col">
-      <b className="text-sm mb-2">{post.likes} likes</b>
+      <span className="mb-2">
+        <Likes likes={post.likes}></Likes>
+      </span>
       {post?.comments?.[0]?.user?.name ? (
         <PostDetails
           comment={post?.comments?.[0]?.content || "No comments"}

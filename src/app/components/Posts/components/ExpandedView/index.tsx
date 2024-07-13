@@ -6,6 +6,7 @@ import { Media } from "../Media";
 import { ActionBar } from "../ActionBar";
 import { timeFromNow } from "@/app/utils";
 import { PostDetails } from "../Details";
+import { Likes } from "../Likes";
 
 type Props = Omit<ModalType, "open">;
 
@@ -59,6 +60,9 @@ export function ExpandedView(props: Props) {
         </div>
         <section className="bottom-0 absolute w-full p-gutter">
           <ActionBar />
+          <span className="mt-2">
+            <Likes likes={selectedPost.likes} />
+          </span>
         </section>
       </section>
     </section>
