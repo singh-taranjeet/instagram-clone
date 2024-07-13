@@ -8,9 +8,11 @@ export interface PostType {
   description: string;
   likes: number;
   user: UserType;
+  createdAt: Date;
   comments: {
     content: string;
     user: UserType;
+    likes: number;
   }[];
   media: {
     name: string;

@@ -33,7 +33,8 @@ const config: Config = {
         primary: "#FCCE02",
         secondary: "#bfdbfe", // blue-200
         light: "#eff6ff", // blue-100
-        "dark-blue": "#7e22ce",
+        "text-gray": "#737373",
+        "text-black": "#262626",
         "neon-blue": "#00FFFF",
         "neon-green": "#7CFC00",
         "neon-yellow": "#F4FF33",
@@ -43,6 +44,7 @@ const config: Config = {
         "rectangle-normal": "0.75rem 1.25rem",
       },
       fontSize: {
+        extraExtraSmall: "0.75rem", // 12px
         extraSmall: "0.875rem", // 14px
         small: "1rem", // 16px
         medium: "1.125rem", // => 20px

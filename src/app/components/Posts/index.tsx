@@ -13,6 +13,7 @@ import { ModalType, PostType } from "./types";
 import { ExpandedView } from "./components/ExpandedView";
 import { ActionBar } from "./components/ActionBar";
 import { Author } from "./components/Author";
+import { LikeComment } from "./components/LikeComment";
 
 export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
@@ -57,19 +58,10 @@ export function Posts() {
 
               <ActionBar />
 
-              <div className="flex flex-col mx-gutter">
-                <b className="text-sm">100 likes</b>
-                <span>
-                  <b className="text-sm">Taranjeet Singh</b>{" "}
-                  {post?.comments?.[0]?.content || "No comments"}
-                </span>
-                <span
-                  className="text-sm text-slate-500"
-                  onClick={() => onClickComments(post)}
-                >
-                  view all 150 comments
-                </span>
-              </div>
+              <LikeComment
+                post={post}
+                onClickComments={() => onClickComments(post)}
+              />
             </div>
           </li>
         ))}
