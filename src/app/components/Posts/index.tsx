@@ -34,6 +34,8 @@ export function Posts() {
     }, []);
   }, [data]);
 
+  console.log("posts", posts);
+
   return (
     <>
       <ul className="flex flex-col mt-small items-center">
@@ -43,7 +45,10 @@ export function Posts() {
             className="max-w-sm py-small xs:mx-gutter border-b border-slate-200"
           >
             <div className="flex flex-col gap-small w-full justify-center">
-              <Author name={post.user.name} profileUrl={post.user.profileUrl} />
+              <Author
+                name={post?.user?.name}
+                profileUrl={post?.user?.profileUrl}
+              />
 
               <Media.Wrapper
                 title={post.description}

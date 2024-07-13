@@ -19,30 +19,56 @@ async function fetchGraphQl(query: string) {
 const post = {
   gql: function GET_POSTS_QUERY(page: number) {
     return `query Posts {
-              posts(page: ${page}) {
-                _id
-                description
-                likes
-                user {
-                  _id
+      posts(page: ${page}) {
+          description
+          likes
+          id
+          createdAt
+          user {
+              name
+              id
+              profileUrl
+          }
+          comments {
+              content
+              likes
+              id
+              user {
                   name
+                  id
                   profileUrl
-                  __typename
-                }
-                comments {
-                  content
-                  likes
-                  user
-                  __typename
-                }
-                media {
-                  name
-                  url
-                  __typename
-                }
-                __typename
               }
-            }`;
+          }
+          media {
+              name
+              type
+              id
+              url
+          }
+      }
+  }
+  `;
+    // return `query Posts {
+    //           posts(page: ${page}) {
+    //             id
+    //             description
+    //             likes
+    //             user {
+    //               id
+    //               name
+    //               profileUrl
+    //             }
+    //             comments {
+    //               content
+    //               likes
+    //               user
+    //             }
+    //             media {
+    //               name
+    //               url
+    //             }
+    //           }
+    //         }`;
   },
   fetch: async function fetchPost(page: number) {
     async function getPosts(page: number) {
