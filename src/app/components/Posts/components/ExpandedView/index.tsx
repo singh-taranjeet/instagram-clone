@@ -7,6 +7,7 @@ import { ActionBar } from "../ActionBar";
 import { timeFromNow } from "@/app/utils";
 import { PostDetails } from "../Details";
 import { Likes } from "../Likes";
+import React from "react";
 
 type Props = Omit<ModalType, "open">;
 
@@ -29,11 +30,8 @@ export function ExpandedView(props: Props) {
         </div>
         <div>
           {selectedPost.comments.map((comment, index) => (
-            <>
-              <div
-                key={comment.user.id}
-                className="flex p-gutter items-censter"
-              >
+            <React.Fragment key={comment.user.id}>
+              <div className="flex p-gutter items-censter">
                 <div>
                   <User.image
                     profileUrl={comment.user.profileUrl}
@@ -55,7 +53,7 @@ export function ExpandedView(props: Props) {
                   </div>
                 </div>
               </div>
-            </>
+            </React.Fragment>
           ))}
         </div>
         <section className="bottom-0 absolute w-full p-gutter">
