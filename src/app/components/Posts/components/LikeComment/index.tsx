@@ -11,7 +11,7 @@ export function LikeComment(props: Props) {
 
   return (
     <div className="flex flex-col">
-      <span className="mb-2">
+      <span className="my-2">
         <Likes likes={post.likes}></Likes>
       </span>
       {post?.comments?.[0]?.user?.name ? (

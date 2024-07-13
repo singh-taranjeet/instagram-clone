@@ -56,12 +56,14 @@ export function Posts() {
                 images={getImages(post.media)}
               />
 
-              <ActionBar />
+              <section className="px-gutter xs:px-0">
+                <ActionBar />
 
-              <LikeComment
-                post={post}
-                onClickComments={() => onClickComments(post)}
-              />
+                <LikeComment
+                  post={post}
+                  onClickComments={() => onClickComments(post)}
+                />
+              </section>
             </div>
           </li>
         ))}
