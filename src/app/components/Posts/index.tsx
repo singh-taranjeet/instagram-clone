@@ -34,7 +34,7 @@ export function Posts() {
     }, []);
   }, [data]);
 
-  console.log("posts", posts);
+  console.log("posts sdds", posts);
 
   return (
     <>

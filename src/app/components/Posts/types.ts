@@ -1,15 +1,16 @@
+export interface UserType {
+  id: string;
+  name: string;
+  profileUrl: string;
+}
 export interface PostType {
   id: string;
   description: string;
   likes: number;
-  user: {
-    _id: string;
-    name: string;
-    profileUrl: string;
-  };
+  user: UserType;
   comments: {
     content: string;
-    user: string;
+    user: UserType;
   }[];
   media: {
     name: string;

@@ -23,8 +23,9 @@ const config: Config = {
         slideLeft: "slideLeft 0.5s ease-in-out",
       },
       spacing: {
-        gutter: "1rem",
         small: "0.75rem", // => 12px
+        medium: "0.875rem", // => 14px
+        gutter: "1rem", // => 16px
         normal: "1.25rem", // > 20px
         large: "2.5rem", // => 40px
       },
@@ -42,6 +43,7 @@ const config: Config = {
         "rectangle-normal": "0.75rem 1.25rem",
       },
       fontSize: {
+        extraSmall: "0.875rem", // 14px
         small: "1rem", // 16px
         medium: "1.125rem", // => 20px
         large: "1.875rem", // => 30px
