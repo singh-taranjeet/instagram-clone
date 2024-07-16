@@ -1,4 +1,5 @@
 import { User } from "@/app/components/UserImage";
+import React from "react";
 import { ModalType } from "../../types";
 import { getImages } from "../../utils";
 import { Author } from "../Author";
@@ -7,21 +8,21 @@ import { ActionBar } from "../ActionBar";
 import { timeFromNow } from "@/app/utils";
 import { PostDetails } from "../Details";
 import { Likes } from "../Likes";
-import React from "react";
+import "./styles.css";
 
 type Props = Omit<ModalType, "open">;
 
 export function ExpandedView(props: Props) {
   const { selectedPost } = props;
   return (
-    <section className="grid grid-cols-2">
-      <div className="hidden sm:block">
+    <section className="flex justify-center gap-0">
+      <div className="hidden sm:block flex-1 expanded-view">
         <Media.Wrapper
           images={getImages(selectedPost.media || [])}
           title={selectedPost.description || ""}
         />
       </div>
-      <section className="bg-white relative">
+      <section className="bg-white relative flex-1">
         <div className="p-[14px] border-b border-slate-200">
           <Author
             name={selectedPost.user.name}
