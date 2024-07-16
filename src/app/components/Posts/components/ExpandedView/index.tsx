@@ -9,21 +9,34 @@ import { timeFromNow } from "@/app/utils";
 import { PostDetails } from "../Details";
 import { Likes } from "../Likes";
 import "./styles.css";
+import { Icon } from "@/app/components/Icon";
+import { useScreenSize, breakPoints } from "@/app/utils/hooks/useScreenSize";
 
 type Props = Omit<ModalType, "open">;
 
 export function ExpandedView(props: Props) {
+  const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
   const { selectedPost } = props;
   return (
-    <section className="flex justify-center gap-0">
-      <div className="hidden sm:block flex-1 expanded-view">
-        <Media.Wrapper
-          images={getImages(selectedPost.media || [])}
-          title={selectedPost.description || ""}
-        />
-      </div>
-      <section className="bg-white relative flex-1">
-        <div className="p-[14px] border-b border-slate-200">
+    <section className="flex justify-center gap-0 h-full">
+      {isDesktop ? (
+        <div className="flex-1 expanded-view">
+          <Media.Wrapper
+            images={getImages(selectedPost.media || [])}
+            title={selectedPost.description || ""}
+          />
+        </div>
+      ) : null}
+      <section className="bg-white relative flex-1 h-screen sm:h-auto">
+        {!isDesktop ? (
+          <div className="px-gutter flex py-small justify-between border-b border-slate-200">
+            <i className="self-start">
+              <Icon.Back className="-rotate-90" />
+            </i>
+            <p className="self-center mx-auto">Comments</p>
+          </div>
+        ) : null}
+        <div className="p-[14px] border-b border-slate-200 hidden sm:block">
           <Author
             name={selectedPost.user.name}
             profileUrl={selectedPost.user.profileUrl}
@@ -31,7 +44,7 @@ export function ExpandedView(props: Props) {
         </div>
         <div>
           {selectedPost.comments.map((comment, index) => (
-            <React.Fragment key={comment.user.id}>
+            <React.Fragment key={`${comment.user.id}${index}`}>
               <div className="flex p-gutter items-censter">
                 <div>
                   <User.image
@@ -57,12 +70,14 @@ export function ExpandedView(props: Props) {
             </React.Fragment>
           ))}
         </div>
-        <section className="bottom-0 absolute w-full p-gutter">
-          <ActionBar />
-          <span className="mt-2">
-            <Likes likes={selectedPost.likes} />
-          </span>
-        </section>
+        {isDesktop ? (
+          <section className="bottom-0 absolute w-full p-gutter">
+            <ActionBar />
+            <span className="mt-2">
+              <Likes likes={selectedPost.likes} />
+            </span>
+          </section>
+        ) : null}
       </section>
     </section>
   );

@@ -1,9 +1,6 @@
 "use client";
-import { useState, useEffect, useRef, useMemo } from "react";
-import Image from "next/image";
-import { Icon } from "../Icon";
+import { useState, useMemo } from "react";
 import React from "react";
-
 import { usePosts } from "@/app/utils/hooks/usePosts";
 import { Modal } from "../Modal";
 import { Media } from "./components/Media";

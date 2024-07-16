@@ -1,3 +1,4 @@
+import { useScreenSize, breakPoints } from "@/app/utils/hooks/useScreenSize";
 import { Icon } from "../Icon";
 
 function ModalTitle(props: Readonly<{ children: React.ReactNode }>) {
@@ -5,7 +6,7 @@ function ModalTitle(props: Readonly<{ children: React.ReactNode }>) {
   return (
     <div className="flex-center w-full absolute" style={{ top: "-1.5rem" }}>
       <div
-        className={`p-rectangle-normal w-fit mx-auto rounded-full border-4 border-primary px-normal ${pinkish}`}
+        className={`p-rectangle-normal w-fit mx-auto rounded-full border-4 border-primary px-normal`}
       >
         <p className="text-center">{children}</p>
       </div>
@@ -35,10 +36,15 @@ function ModalBody(props: Readonly<{ children: React.ReactNode }>) {
     e.stopPropagation();
   }
 
+  const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
+
+  const desktopClasses = "rounded-3xl w-4/5 min-w-[300px] m-auto";
+  const className = isDesktop ? desktopClasses : "w-full h-full";
+
   return (
     <div
       onClick={stopPropogation}
-      className={`modal-content m-auto rounded-3xl w-4/5 relative min-w-[300px]`}
+      className={`modal-content relative ${className}`}
     >
       {props.children}
     </div>
@@ -47,7 +53,7 @@ function ModalBody(props: Readonly<{ children: React.ReactNode }>) {
 
 function ModalContent(props: Readonly<{ children: React.ReactNode }>) {
   const { children } = props;
-  return <div className="p-small md:p-normal mt-6">{children}</div>;
+  return <div className="sm:p-small md:p-normal sm:mt-6">{children}</div>;
 }
 
 function ModalDialog(
