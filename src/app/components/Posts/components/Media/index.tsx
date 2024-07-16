@@ -16,7 +16,7 @@ function MobileImageContainer(props: { children: React.ReactNode }) {
 function DesktopImageContainer(props: { children: React.ReactNode }) {
   return (
     <div
-      style={{ paddingBottom: `100%` }}
+      style={{ paddingBottom: `100%`, width: "min(420px, 100vw)" }}
       className="desktop relative hidden flex-col justify-center items-center xs:flex"
     >
       {props.children}
@@ -39,8 +39,9 @@ function PostImage(props: {
         : "animate-slideLeft";
   return (
     <Image
-      className={`object-contain sm:object-cover ${slideDirection} ${visible ? "block" : "hidden"}`}
+      className={`object-cover ${slideDirection} ${visible ? "block" : "hidden"}`}
       fill={true}
+      priority={true}
       alt={title}
       src={image}
     />

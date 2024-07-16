@@ -43,7 +43,7 @@ export function Posts() {
         {posts?.map((post: PostType, index: number) => (
           <li
             key={`${post.id}-${index}`}
-            className="max-w-sm py-small xs:mx-gutter border-b border-slate-200"
+            className="max-w-[420px] py-small xs:mx-gutter border-b border-slate-200"
           >
             <div className="flex flex-col gap-small w-full justify-center">
               <Author
