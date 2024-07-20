@@ -71,7 +71,10 @@ export function Posts() {
           <Modal.ModalCloseIcon onClose={onModalClose} />
           <Modal.ModalContent>
             {modal?.selectedPost ? (
-              <ExpandedView selectedPost={modal.selectedPost} />
+              <ExpandedView
+                onClose={onModalClose}
+                selectedPost={modal.selectedPost}
+              />
             ) : null}
           </Modal.ModalContent>
         </Modal.ModalBody>

@@ -13,10 +13,13 @@ import { Icon } from "@/app/components/Icon";
 import { useScreenSize, breakPoints } from "@/app/utils/hooks/useScreenSize";
 
 type Props = Omit<ModalType, "open">;
+type ExpandedViewProps = Props & {
+  onClose(): void;
+};
 
-export function ExpandedView(props: Props) {
+export function ExpandedView(props: ExpandedViewProps) {
   const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
-  const { selectedPost } = props;
+  const { selectedPost, onClose } = props;
   return (
     <section className="flex justify-center gap-0 h-full">
       {isDesktop ? (
@@ -30,7 +33,7 @@ export function ExpandedView(props: Props) {
       <section className="bg-white relative flex-1 h-screen sm:h-auto">
         {!isDesktop ? (
           <div className="px-gutter flex py-small justify-between border-b border-slate-200">
-            <i className="self-start">
+            <i className="self-start" onClick={onClose}>
               <Icon.Back className="-rotate-90" />
             </i>
             <p className="self-center mx-auto">Comments</p>

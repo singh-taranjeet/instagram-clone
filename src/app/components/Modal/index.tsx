@@ -1,5 +1,6 @@
 import { useScreenSize, breakPoints } from "@/app/utils/hooks/useScreenSize";
 import { Icon } from "../Icon";
+import { useEffect } from "react";
 
 function ModalTitle(props: Readonly<{ children: React.ReactNode }>) {
   const { children } = props;
@@ -64,6 +65,16 @@ function ModalDialog(
   }>
 ) {
   const { children, onClose = () => {}, open } = props;
+
+  useEffect(() => {
+    if (open) {
+      // add class to body to prevent scrolling, stop-body-scrolling
+      document.body.classList.add("stop-body-scrolling");
+    } else {
+      // remove class to body to allow scrolling
+      document.body.classList.remove("stop-body-scrolling");
+    }
+  }, [open]);
 
   return (
     <div
