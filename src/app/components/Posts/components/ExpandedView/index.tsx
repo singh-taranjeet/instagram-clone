@@ -30,7 +30,7 @@ export function ExpandedView(props: ExpandedViewProps) {
           />
         </div>
       ) : null}
-      <section className="bg-white relative flex-1 h-screen sm:h-auto">
+      <section className="bg-white relative flex-1 min-h-screen h-full sm:h-auto">
         {!isDesktop ? (
           <div className="px-gutter flex py-small justify-between border-b border-slate-200">
             <i className="self-start" onClick={onClose}>
