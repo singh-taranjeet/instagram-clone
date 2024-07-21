@@ -46,7 +46,7 @@ export function ExpandedView(props: ExpandedViewProps) {
             profileUrl={selectedPost.user.profileUrl}
           />
         </div>
-        <div className="mt-12 sm:mt-0 sm:overflow-y-scroll expanded-view-container">
+        <div className="mt-12 sm:mt-0 overflow-y-scroll expanded-view-container">
           {selectedPost.comments.map((comment, index) => (
             <React.Fragment key={`${comment.user.id}${index}`}>
               <div className="flex p-gutter items-censter">
