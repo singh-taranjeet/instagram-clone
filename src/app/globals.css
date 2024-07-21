@@ -9,6 +9,5 @@ body {
 }
 
 .stop-body-scrolling {
-  height: 100vh;
-  overflow-y: hidden;
+  overflow: hidden;
 }

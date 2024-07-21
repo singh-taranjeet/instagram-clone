@@ -11,9 +11,9 @@ function UserImage(props: Props) {
   return (
     <span className="flex gap-small items-center">
       <Image
-        className="rounded-full border-pink-700 border-2"
-        width={42}
-        height={42}
+        className="rounded-full border-pink-700 border-2 min-w-10"
+        width={40}
+        height={40}
         alt={name}
         src={`${profileUrl}`}
       />
@@ -24,7 +24,11 @@ function UserImage(props: Props) {
 }
 
 function UserName(props: React.PropsWithChildren<{}>) {
-  return <b className="font-semibold text-extraSmall">{props.children}</b>;
+  return (
+    <span className="font-semibold text-extraSmall text-nowrap">
+      {props.children}
+    </span>
+  );
 }
 
 export const User = {

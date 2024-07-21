@@ -21,16 +21,17 @@ export function ExpandedView(props: ExpandedViewProps) {
   const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
   const { selectedPost, onClose } = props;
   return (
-    <section className="flex justify-center gap-0 h-full">
+    <section className="flex justify-center gap-0 h-full expanded-view-container">
       {isDesktop ? (
-        <div className="flex-1 expanded-view">
+        <div className="flex-1 expanded-view bg-black ">
           <Media.Wrapper
+            fit="contain"
             images={getImages(selectedPost.media || [])}
             title={selectedPost.description || ""}
           />
         </div>
       ) : null}
-      <section className="bg-white relative flex-1 min-h-screen h-full sm:h-auto">
+      <section className="bg-white relative flex-1 overflow-y-scroll expanded-view-container">
         {!isDesktop ? (
           <div className="px-gutter flex py-small justify-between border-b border-slate-200">
             <i className="self-start" onClick={onClose}>

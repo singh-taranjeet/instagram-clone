@@ -2,6 +2,7 @@ import { Icon } from "@/app/components/Icon";
 import { useState } from "react";
 import { useSwipeable } from "react-swipeable";
 import { Media } from "../Media";
+import { ObjectFitType } from "../../types";
 
 function CarouselButton(props: {
   direction: "next" | "prev";
@@ -24,8 +25,12 @@ function CarouselButton(props: {
   );
 }
 
-export function Carousel(props: { title: string; images: string[] }) {
-  const { title, images } = props;
+export function Carousel(props: {
+  title: string;
+  images: string[];
+  fit?: ObjectFitType;
+}) {
+  const { title, images, fit = "cover" } = props;
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [currentDirection, setCurrentDirection] = useState<
@@ -65,6 +70,7 @@ export function Carousel(props: { title: string; images: string[] }) {
         <Media.PostImage
           visible={currentImageIndex === index}
           key={index}
+          fit={fit}
           direction={currentDirection}
           title={`${title} - ${index}`}
           image={`${image}`}

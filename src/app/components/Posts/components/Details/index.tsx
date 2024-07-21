@@ -7,9 +7,9 @@ interface Props {
 export function PostDetails(props: Props) {
   const { userName, comment } = props;
   return (
-    <div className="flex items-center">
+    <span>
       <User.name>{userName}</User.name>
-      <p className="px-small text-extraSmall">{comment}</p>
-    </div>
+      <span className="px-small text-extraSmall">{comment}</span>
+    </span>
   );
 }

@@ -24,3 +24,5 @@ export interface ModalType {
   open: boolean;
   selectedPost: PostType;
 }
+
+export type ObjectFitType = "cover" | "contain";

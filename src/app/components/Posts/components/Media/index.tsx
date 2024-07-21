@@ -1,6 +1,7 @@
 import { Carousel } from "../Carousel";
 import Image from "next/image";
 import React from "react";
+import { ObjectFitType } from "../../types";
 
 function MobileImageContainer(props: { children: React.ReactNode }) {
   return (
@@ -29,8 +30,11 @@ function PostImage(props: {
   image: string;
   visible: boolean;
   direction?: "next" | "prev";
+  fit?: ObjectFitType;
 }) {
-  const { title, image, visible } = props;
+  const { title, image, visible, fit = "cover" } = props;
+  const objectFit =
+    fit === "cover" ? "object-cover" : "object-contain lg:object-cover";
   const slideDirection =
     typeof props.direction === "undefined"
       ? ""
@@ -39,7 +43,7 @@ function PostImage(props: {
         : "animate-slideLeft";
   return (
     <Image
-      className={`object-cover ${slideDirection} ${visible ? "block" : "hidden"}`}
+      className={`${objectFit} ${slideDirection} ${visible ? "block" : "hidden"}`}
       fill={true}
       priority={true}
       alt={title}
@@ -48,16 +52,20 @@ function PostImage(props: {
   );
 }
 
-function Wrapper(props: { title: string; images: string[] }) {
-  const { title, images } = props;
+function Wrapper(props: {
+  title: string;
+  images: string[];
+  fit: ObjectFitType;
+}) {
+  const { title, images, fit = "cover" } = props;
   return (
     <React.Fragment>
       <MobileImageContainer>
-        <Carousel title={title} images={images} />
+        <Carousel title={title} images={images} fit={fit} />
       </MobileImageContainer>
 
       <DesktopImageContainer>
-        <Carousel title={title} images={images} />
+        <Carousel title={title} images={images} fit={fit} />
       </DesktopImageContainer>
     </React.Fragment>
   );
