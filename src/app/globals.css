@@ -10,4 +10,5 @@ body {
 
 .stop-body-scrolling {
   overflow: hidden;
+  position: fixed;
 }

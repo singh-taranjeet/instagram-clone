@@ -21,7 +21,7 @@ export function ExpandedView(props: ExpandedViewProps) {
   const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
   const { selectedPost, onClose } = props;
   return (
-    <section className="flex justify-center gap-0 h-full expanded-view-container">
+    <section className="flex justify-center gap-0 h-full">
       {isDesktop ? (
         <div className="flex-1 expanded-view bg-black ">
           <Media.Wrapper
@@ -31,7 +31,7 @@ export function ExpandedView(props: ExpandedViewProps) {
           />
         </div>
       ) : null}
-      <section className="bg-white relative flex-1 overflow-y-scroll expanded-view-container">
+      <section className="bg-white relative flex-1 sm:overflow-y-scroll overflow-y-hidden">
         {!isDesktop ? (
           <div className="px-gutter flex py-small justify-between border-b border-slate-200 absolute top-0 w-full">
             <i className="self-start" onClick={onClose}>
@@ -40,13 +40,13 @@ export function ExpandedView(props: ExpandedViewProps) {
             <p className="self-center mx-auto">Comments</p>
           </div>
         ) : null}
-        <div className="p-[14px] border-b border-slate-200 hidden sm:block">
+        <div className="p-gutter border-b border-slate-200 hidden sm:block">
           <Author
             name={selectedPost.user.name}
             profileUrl={selectedPost.user.profileUrl}
           />
         </div>
-        <div className="mt-12 sm:mt-0">
+        <div className="mt-12 sm:mt-0 sm:overflow-y-scroll expanded-view-container">
           {selectedPost.comments.map((comment, index) => (
             <React.Fragment key={`${comment.user.id}${index}`}>
               <div className="flex p-gutter items-censter">
