@@ -6,3 +6,9 @@
 .expanded-view-container {
   height: calc(100vh - 100px);
 }
+
+@media only screen and (max-width: 640px) {
+  .expanded-view-container {
+    height: auto;
+  }
+}

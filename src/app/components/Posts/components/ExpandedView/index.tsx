@@ -33,7 +33,7 @@ export function ExpandedView(props: ExpandedViewProps) {
       ) : null}
       <section className="bg-white relative flex-1 overflow-y-scroll expanded-view-container">
         {!isDesktop ? (
-          <div className="px-gutter flex py-small justify-between border-b border-slate-200">
+          <div className="px-gutter flex py-small justify-between border-b border-slate-200 absolute top-0 w-full">
             <i className="self-start" onClick={onClose}>
               <Icon.Back className="-rotate-90" />
             </i>
@@ -46,7 +46,7 @@ export function ExpandedView(props: ExpandedViewProps) {
             profileUrl={selectedPost.user.profileUrl}
           />
         </div>
-        <div>
+        <div className="mt-12 sm:mt-0">
           {selectedPost.comments.map((comment, index) => (
             <React.Fragment key={`${comment.user.id}${index}`}>
               <div className="flex p-gutter items-censter">
