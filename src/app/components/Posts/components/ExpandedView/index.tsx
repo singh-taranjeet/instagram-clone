@@ -74,12 +74,30 @@ export function ExpandedView(props: ExpandedViewProps) {
             </React.Fragment>
           ))}
         </div>
+        {/* Actions and likes */}
         {isDesktop ? (
           <section className="bottom-0 absolute w-full p-gutter bg-white">
             <ActionBar />
             <span className="mt-2">
               <Likes likes={selectedPost.likes} />
             </span>
+          </section>
+        ) : null}
+        {/* Show add a new comment in mobile */}
+        {!isDesktop ? (
+          <section className="absolute bottom-0 flex items-center p-gutter border-t border-b border-slate-200 bg-white w-full gap-small">
+            <div>
+              <User.image
+                profileUrl={selectedPost.user.profileUrl}
+                name={selectedPost.user.name}
+              />
+            </div>
+            <textarea
+              className="w-full outline-none overflow-y-hidden h-5 max-h-20 text-sm resize-none flex"
+              aria-label="Add a comment"
+              placeholder="Add a comment..."
+            />
+            <button className="text-blue-600 font-semibold">Post</button>
           </section>
         ) : null}
       </section>
