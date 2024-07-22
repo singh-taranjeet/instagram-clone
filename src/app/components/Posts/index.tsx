@@ -49,6 +49,7 @@ export function Posts() {
               />
 
               <Media.Wrapper
+                fit="cover"
                 title={post.description}
                 images={getImages(post.media)}
               />
