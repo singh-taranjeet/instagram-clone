@@ -95,6 +95,40 @@ export const queries = {
       return post.fetch(params.pageParam);
     },
   },
+  createComment: {
+    name: "createComment",
+    mutation: async (postId: string, content: string) => {
+      async function create(postId: string, content: string) {
+        return fetchGraphQl(queries.createComment.gql(postId, content));
+      }
+
+      const { data } = await create(postId, content);
+      return data.createComment;
+    },
+    gql: (postId: string, content: string) => {
+      return `mutation CreateComment {
+        createComment(
+            createCommentInput: { content: "${content}", user: 9, post: ${postId} }
+        ) {
+            content
+            likes
+            id
+            user {
+                name
+                id
+                profileUrl
+            }
+            post {
+                description
+                likes
+                id
+                createdAt
+            }
+            createdAt
+        }
+    }`;
+    },
+  },
 };
 
 export function timeFromNow(date: Date) {

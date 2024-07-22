@@ -1,6 +1,6 @@
 import { User } from "@/app/components/UserImage";
 import React from "react";
-import { ModalType } from "../../types";
+import { ModalType, PostType } from "../../types";
 import { getImages } from "../../utils";
 import { Author } from "../Author";
 import { Media } from "../Media";
@@ -11,6 +11,7 @@ import { Likes } from "../Likes";
 import "./styles.css";
 import { Icon } from "@/app/components/Icon";
 import { useScreenSize, breakPoints } from "@/app/utils/hooks/useScreenSize";
+import { AddComment } from "../AddComment";
 
 type Props = Omit<ModalType, "open">;
 type ExpandedViewProps = Props & {
@@ -46,7 +47,7 @@ export function ExpandedView(props: ExpandedViewProps) {
             profileUrl={selectedPost.user.profileUrl}
           />
         </div>
-        <div className="mt-12 sm:mt-0 overflow-y-scroll expanded-view-container pb-20">
+        <div className="mt-12 sm:mt-0 overflow-y-scroll expanded-view-container pb-[145px]">
           {selectedPost.comments.map((comment, index) => (
             <React.Fragment key={`${comment.user.id}${index}`}>
               <div className="flex p-gutter items-censter">
@@ -76,30 +77,21 @@ export function ExpandedView(props: ExpandedViewProps) {
         </div>
         {/* Actions and likes */}
         {isDesktop ? (
-          <section className="bottom-0 absolute w-full p-gutter bg-white">
-            <ActionBar />
-            <span className="mt-2">
-              <Likes likes={selectedPost.likes} />
-            </span>
+          <section className="bottom-0 absolute w-full bg-white border-y border-slate-200">
+            <section className="p-gutter flex flex-col gap-2">
+              <ActionBar />
+              <span>
+                <Likes likes={selectedPost.likes} />
+              </span>
+            </section>
+            {/* Show add a new comment in mobile */}
+            <AddComment selectedPost={selectedPost} />
           </section>
-        ) : null}
-        {/* Show add a new comment in mobile */}
-        {!isDesktop ? (
-          <section className="absolute bottom-0 flex items-center p-gutter border-t border-b border-slate-200 bg-white w-full gap-small">
-            <div>
-              <User.image
-                profileUrl={selectedPost.user.profileUrl}
-                name={selectedPost.user.name}
-              />
-            </div>
-            <textarea
-              className="w-full outline-none overflow-y-hidden h-5 max-h-20 text-sm resize-none flex"
-              aria-label="Add a comment"
-              placeholder="Add a comment..."
-            />
-            <button className="text-blue-600 font-semibold">Post</button>
+        ) : (
+          <section className=" absolute bottom-0 w-full">
+            <AddComment selectedPost={selectedPost} />
           </section>
-        ) : null}
+        )}
       </section>
     </section>
   );
