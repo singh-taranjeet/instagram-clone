@@ -107,6 +107,37 @@ export const queries = {
     }`;
     },
   },
+  fetchComments: {
+    name: "fetchComments",
+    queryFn: (postId: string) => {
+      return async (params: { pageParam: number }) =>
+        queries.fetchComments.mutation(postId, params.pageParam);
+    },
+    mutation: async (postId: string, page: number) => {
+      async function create(postId: string, page: number) {
+        return fetchGraphQl(queries.fetchComments.gql(postId, page));
+      }
+      const { data } = await create(postId, page);
+      return data.post.comments;
+    },
+    gql: (postId: string, page: number) => {
+      return `query Comments {
+        post(id: ${postId}, commentPage: ${page}) {
+            comments {
+                content
+                likes
+                id
+                createdAt
+                user {
+                    name
+                    id
+                    profileUrl
+                }
+            }
+        }
+    }`;
+    },
+  },
 };
 
 export function timeFromNow(date: Date) {

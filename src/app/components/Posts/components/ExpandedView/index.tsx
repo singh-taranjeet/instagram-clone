@@ -1,5 +1,5 @@
 import { User } from "@/app/components/UserImage";
-import React from "react";
+import React, { useMemo } from "react";
 import { ModalType, PostType } from "../../types";
 import { getImages } from "../../utils";
 import { Author } from "../Author";
@@ -12,6 +12,8 @@ import "./styles.css";
 import { Icon } from "@/app/components/Icon";
 import { useScreenSize, breakPoints } from "@/app/utils/hooks/useScreenSize";
 import { AddComment } from "../AddComment";
+import { useQuery } from "@tanstack/react-query";
+import { useComments } from "./useComments";
 
 type Props = Omit<ModalType, "open">;
 type ExpandedViewProps = Props & {
@@ -21,6 +23,16 @@ type ExpandedViewProps = Props & {
 export function ExpandedView(props: ExpandedViewProps) {
   const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
   const { selectedPost, onClose } = props;
+
+  const { data } = useComments(selectedPost.id, 0);
+  console.log("comments", data);
+
+  const comments = useMemo(() => {
+    return data?.pages.reduce((acc, page) => {
+      return [...acc, ...page];
+    }, []);
+  }, [data]);
+
   return (
     <section className="flex justify-center gap-0 h-full">
       {isDesktop ? (
@@ -48,7 +60,7 @@ export function ExpandedView(props: ExpandedViewProps) {
           />
         </div>
         <div className="mt-12 sm:mt-0 overflow-y-scroll expanded-view-container pb-[145px]">
-          {selectedPost.comments.map((comment, index) => (
+          {comments?.map((comment: any, index: number) => (
             <React.Fragment key={`${comment.user.id}${index}`}>
               <div className="flex p-gutter items-censter">
                 <div>

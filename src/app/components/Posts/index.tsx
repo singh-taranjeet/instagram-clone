@@ -11,8 +11,6 @@ import { ExpandedView } from "./components/ExpandedView";
 import { ActionBar } from "./components/ActionBar";
 import { Author } from "./components/Author";
 import { LikeComment } from "./components/LikeComment";
-import { useMutation } from "@tanstack/react-query";
-import { queries } from "@/app/utils";
 
 export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
