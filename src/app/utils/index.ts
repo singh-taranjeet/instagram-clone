@@ -31,15 +31,14 @@ const post = {
               id
               profileUrl
           }
-          comments {
-              content
-              likes
-              id
-              user {
-                  name
-                  id
-                  profileUrl
-              }
+          commentsCount
+          highlightedComment {
+            content
+            createdAt
+            user {
+              name
+              profileUrl
+            }
           }
           media {
               name
@@ -50,27 +49,6 @@ const post = {
       }
   }
   `;
-    // return `query Posts {
-    //           posts(page: ${page}) {
-    //             id
-    //             description
-    //             likes
-    //             user {
-    //               id
-    //               name
-    //               profileUrl
-    //             }
-    //             comments {
-    //               content
-    //               likes
-    //               user
-    //             }
-    //             media {
-    //               name
-    //               url
-    //             }
-    //           }
-    //         }`;
   },
   fetch: async function fetchPost(page: number) {
     async function getPosts(page: number) {

@@ -9,11 +9,11 @@ export interface PostType {
   likes: number;
   user: UserType;
   createdAt: Date;
-  comments: {
+  commentsCount: number;
+  highlightedComment: {
     content: string;
     user: UserType;
-    likes: number;
-  }[];
+  };
   media: {
     name: string;
     url: string;
