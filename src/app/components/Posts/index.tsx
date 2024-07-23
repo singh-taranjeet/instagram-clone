@@ -1,7 +1,7 @@
 "use client";
 import { useState, useMemo } from "react";
 import React from "react";
-import { usePosts } from "@/app/utils/hooks/usePosts";
+import { usePosts } from "@/app/components/Posts/hooks/usePosts";
 import { Modal } from "../Modal";
 import { Media } from "./components/Media";
 import { LoadMore } from "./components/LoadMore";

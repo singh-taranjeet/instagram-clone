@@ -1,6 +1,6 @@
 import { User } from "@/app/components/UserImage";
 import React, { useMemo } from "react";
-import { ModalType, PostType } from "../../types";
+import { ModalType } from "../../types";
 import { getImages } from "../../utils";
 import { Author } from "../Author";
 import { Media } from "../Media";
@@ -12,7 +12,6 @@ import "./styles.css";
 import { Icon } from "@/app/components/Icon";
 import { useScreenSize, breakPoints } from "@/app/utils/hooks/useScreenSize";
 import { AddComment } from "../AddComment";
-import { useQuery } from "@tanstack/react-query";
 import { useComments } from "./useComments";
 
 type Props = Omit<ModalType, "open">;
