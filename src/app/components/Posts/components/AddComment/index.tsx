@@ -1,8 +1,8 @@
 import React from "react";
 import { User } from "@/app/components/UserImage";
 import { PostType } from "../../types";
-import { queries } from "@/app/utils";
 import { useMutation } from "@tanstack/react-query";
+import { queries } from "../../queries";
 
 export function AddComment(props: { selectedPost: PostType }) {
   const { selectedPost } = props;

@@ -1,5 +1,5 @@
-import { queries } from "@/app/utils";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { queries } from "../../queries";
 
 export function useComments(postId: string, page: number) {
   const { data, error, fetchNextPage, hasNextPage, isFetching, isLoading } =

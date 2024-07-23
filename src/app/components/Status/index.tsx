@@ -1,13 +1,13 @@
 "use client";
 import Image from "next/image";
-import { queries } from "@/app/utils";
+import { rootQueries } from "@/app/utils";
 import { useQuery } from "@tanstack/react-query";
 import Carousel from "../Carousel";
 
 export function Status() {
   const { data } = useQuery({
-    queryKey: [queries.fetchUsers.name],
-    queryFn: queries.fetchUsers.queryFn,
+    queryKey: [rootQueries.fetchUsers.name],
+    queryFn: rootQueries.fetchUsers.queryFn,
   });
 
   return (
