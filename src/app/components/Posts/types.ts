@@ -20,6 +20,14 @@ export interface PostType {
   }[];
 }
 
+export interface CommentType {
+  content: string;
+  likes: number;
+  id: number;
+  createdAt: Date;
+  user: UserType;
+}
+
 export interface ModalType {
   open: boolean;
   selectedPost: PostType;

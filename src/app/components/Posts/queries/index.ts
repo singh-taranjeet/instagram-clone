@@ -1,4 +1,5 @@
 import { fetchGraphQl } from "@/app/utils";
+import { CommentType } from "../types";
 
 const post = {
   gql: function GET_POSTS_QUERY(page: number) {
@@ -117,8 +118,10 @@ export const queries = {
   fetchComments: {
     name: "fetchComments",
     queryFn: (postId: string) => {
-      return async (params: { pageParam: number }) =>
-        comment.fetch.query(postId, params.pageParam);
+      //return type is ResponseType
+      return async (params: { pageParam: number }) => {
+        return comment.fetch.query(postId, params.pageParam);
+      };
     },
   },
 };

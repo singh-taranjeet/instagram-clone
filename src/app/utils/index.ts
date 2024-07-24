@@ -19,48 +19,6 @@ export async function fetchGraphQl(query: string) {
   return data.json();
 }
 
-// const post = {
-//   gql: function GET_POSTS_QUERY(page: number) {
-//     return `query Posts {
-//       posts(page: ${page}) {
-//           description
-//           likes
-//           id
-//           createdAt
-//           user {
-//               name
-//               id
-//               profileUrl
-//           }
-//           commentsCount
-//           highlightedComment {
-//             content
-//             createdAt
-//             user {
-//               name
-//               profileUrl
-//             }
-//           }
-//           media {
-//               name
-//               type
-//               id
-//               url
-//           }
-//       }
-//   }
-//   `;
-//   },
-//   fetch: async function fetchPost(page: number) {
-//     async function getPosts(page: number) {
-//       return fetchGraphQl(post.gql(page));
-//     }
-
-//     const { data } = await getPosts(page);
-//     return data.posts;
-//   },
-// };
-
 export const rootQueries = {
   fetchUsers: {
     name: "fetchUsers",
@@ -68,77 +26,6 @@ export const rootQueries = {
       return fetch(`${baseUrl}api/users`).then((res) => res.json());
     },
   },
-  // fetchPosts: {
-  //   name: "fetchPosts",
-  //   queryFn: async (params: { pageParam: number }) => {
-  //     return post.fetch(params.pageParam);
-  //   },
-  // },
-  // createComment: {
-  //   name: "createComment",
-  //   mutation: async (postId: string, content: string) => {
-  //     async function create(postId: string, content: string) {
-  //       return fetchGraphQl(queries.createComment.gql(postId, content));
-  //     }
-
-  //     const { data } = await create(postId, content);
-  //     return data.createComment;
-  //   },
-  //   gql: (postId: string, content: string) => {
-  //     return `mutation CreateComment {
-  //       createComment(
-  //           createCommentInput: { content: "${content}", user: 9, post: ${postId} }
-  //       ) {
-  //           content
-  //           likes
-  //           id
-  //           user {
-  //               name
-  //               id
-  //               profileUrl
-  //           }
-  //           post {
-  //               description
-  //               likes
-  //               id
-  //               createdAt
-  //           }
-  //           createdAt
-  //       }
-  //   }`;
-  //   },
-  // },
-  // fetchComments: {
-  //   name: "fetchComments",
-  //   queryFn: (postId: string) => {
-  //     return async (params: { pageParam: number }) =>
-  //       queries.fetchComments.mutation(postId, params.pageParam);
-  //   },
-  //   mutation: async (postId: string, page: number) => {
-  //     async function create(postId: string, page: number) {
-  //       return fetchGraphQl(queries.fetchComments.gql(postId, page));
-  //     }
-  //     const { data } = await create(postId, page);
-  //     return data.post.comments;
-  //   },
-  //   gql: (postId: string, page: number) => {
-  //     return `query Comments {
-  //       post(id: ${postId}, commentPage: ${page}) {
-  //           comments {
-  //               content
-  //               likes
-  //               id
-  //               createdAt
-  //               user {
-  //                   name
-  //                   id
-  //                   profileUrl
-  //               }
-  //           }
-  //       }
-  //   }`;
-  //   },
-  // },
 };
 
 export function timeFromNow(date: Date) {

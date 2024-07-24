@@ -16,7 +16,7 @@ export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
   const [modal, setModal] = useState<ModalType | undefined>(undefined);
 
-  console.log("modal", modal);
+  // console.log("modal", modal);
 
   function onModalClose() {
     setModal(undefined);
@@ -32,7 +32,7 @@ export function Posts() {
     }, []);
   }, [data]);
 
-  console.log("posts sdds", posts);
+  // console.log("posts sdds", posts);
 
   return (
     <>

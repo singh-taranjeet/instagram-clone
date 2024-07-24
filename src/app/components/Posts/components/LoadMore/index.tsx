@@ -34,11 +34,25 @@ export function LoadMore(props: { nextPage(): void; isFetching: boolean }) {
   const componentRef = useRef<HTMLDivElement | null>(null);
   const isVisible = useElementOnScreen(componentRef);
 
-  useEffect(() => {
+  const timerId = useRef<NodeJS.Timeout | null>(null);
+
+  function checkVisibility() {
     if (isVisible) {
       nextPage();
     }
-  }, [isVisible, nextPage]);
+  }
+
+  function clearTimer() {
+    timerId.current && clearInterval(timerId.current);
+  }
+
+  // set timer if playerData is empty
+  useEffect(() => {
+    timerId.current = setInterval(() => {
+      checkVisibility();
+    }, 1000);
+    return clearTimer;
+  }, [isVisible]);
 
   return (
     <div ref={componentRef}>

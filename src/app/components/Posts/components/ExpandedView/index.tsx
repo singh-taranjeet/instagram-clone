@@ -1,6 +1,6 @@
 import { User } from "@/app/components/UserImage";
 import React, { useMemo } from "react";
-import { ModalType } from "../../types";
+import { CommentType, ModalType } from "../../types";
 import { getImages } from "../../utils";
 import { Author } from "../Author";
 import { Media } from "../Media";
@@ -13,6 +13,7 @@ import { Icon } from "@/app/components/Icon";
 import { useScreenSize, breakPoints } from "@/app/utils/hooks/useScreenSize";
 import { AddComment } from "../AddComment";
 import { useComments } from "./useComments";
+import { LoadMore } from "../LoadMore";
 
 type Props = Omit<ModalType, "open">;
 type ExpandedViewProps = Props & {
@@ -23,8 +24,7 @@ export function ExpandedView(props: ExpandedViewProps) {
   const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
   const { selectedPost, onClose } = props;
 
-  const { data } = useComments(selectedPost.id, 0);
-  console.log("comments", data);
+  const { data, isFetching, fetchNextPage } = useComments(selectedPost.id);
 
   const comments = useMemo(() => {
     return data?.pages.reduce((acc, page) => {
@@ -59,7 +59,7 @@ export function ExpandedView(props: ExpandedViewProps) {
           />
         </div>
         <div className="mt-12 sm:mt-0 overflow-y-scroll expanded-view-container pb-[145px]">
-          {comments?.map((comment: any, index: number) => (
+          {comments?.map((comment: CommentType, index: number) => (
             <React.Fragment key={`${comment.user.id}${index}`}>
               <div className="flex p-gutter items-censter">
                 <div>
@@ -85,6 +85,7 @@ export function ExpandedView(props: ExpandedViewProps) {
               </div>
             </React.Fragment>
           ))}
+          <LoadMore isFetching={isFetching} nextPage={fetchNextPage} />
         </div>
         {/* Actions and likes */}
         {isDesktop ? (
