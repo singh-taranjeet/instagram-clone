@@ -4,8 +4,13 @@ import { PostType } from "../../types";
 import { useMutation } from "@tanstack/react-query";
 import { queries } from "../../queries";
 
-export function AddComment(props: { selectedPost: PostType }) {
-  const { selectedPost } = props;
+type Props = {
+  selectedPost: PostType;
+  onPost(): void;
+};
+
+export function AddComment(props: Props) {
+  const { selectedPost, onPost } = props;
 
   async function createComment(data: { postId: string; content: string }) {
     const { postId, content } = data;
@@ -20,8 +25,15 @@ export function AddComment(props: { selectedPost: PostType }) {
     setContent(e.target.value);
   }
 
-  function onPost() {
-    createCommentMutation.mutate({ postId: selectedPost.id, content });
+  async function onClickPost() {
+    createCommentMutation.mutate(
+      { postId: selectedPost.id, content },
+      {
+        onSuccess: () => {
+          onPost();
+        },
+      }
+    );
   }
 
   return (
@@ -38,7 +50,7 @@ export function AddComment(props: { selectedPost: PostType }) {
         aria-label="Add a comment"
         placeholder="Add a comment..."
       />
-      <button onClick={onPost} className="text-blue-600 font-semibold">
+      <button onClick={onClickPost} className="text-blue-600 font-semibold">
         Post
       </button>
     </section>

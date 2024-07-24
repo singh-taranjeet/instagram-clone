@@ -24,7 +24,9 @@ export function ExpandedView(props: ExpandedViewProps) {
   const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
   const { selectedPost, onClose } = props;
 
-  const { data, isFetching, fetchNextPage } = useComments(selectedPost.id);
+  const { data, isFetching, fetchNextPage, refetch } = useComments(
+    selectedPost.id
+  );
 
   const comments = useMemo(() => {
     return data?.pages.reduce((acc, page) => {
@@ -97,11 +99,11 @@ export function ExpandedView(props: ExpandedViewProps) {
               </span>
             </section>
             {/* Show add a new comment in mobile */}
-            <AddComment selectedPost={selectedPost} />
+            <AddComment onPost={refetch} selectedPost={selectedPost} />
           </section>
         ) : (
           <section className=" absolute bottom-0 w-full">
-            <AddComment selectedPost={selectedPost} />
+            <AddComment onPost={refetch} selectedPost={selectedPost} />
           </section>
         )}
       </section>
