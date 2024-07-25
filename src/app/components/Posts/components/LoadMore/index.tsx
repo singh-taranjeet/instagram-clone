@@ -45,7 +45,6 @@ export function LoadMore(props: Props) {
 
   // set timer if playerData is empty
   useEffect(() => {
-    const id = timerId.current;
     function checkVisibility() {
       if (isVisible) {
         nextPage();
@@ -55,7 +54,7 @@ export function LoadMore(props: Props) {
       checkVisibility();
     }, 1000);
     return () => {
-      id && clearInterval(id);
+      timerId.current && clearInterval(timerId.current);
     };
   }, [isVisible, nextPage]);
 

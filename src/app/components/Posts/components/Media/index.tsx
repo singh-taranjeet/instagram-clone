@@ -45,7 +45,7 @@ function PostImage(props: {
     <Image
       className={`${objectFit} ${slideDirection} ${visible ? "block" : "hidden"}`}
       fill={true}
-      priority={true}
+      priority={false}
       alt={title}
       src={image}
     />
