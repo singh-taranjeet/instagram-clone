@@ -11,6 +11,7 @@ import { ExpandedView } from "./components/ExpandedView";
 import { ActionBar } from "./components/ActionBar";
 import { Author } from "./components/Author";
 import { LikeComment } from "./components/LikeComment";
+import { PulseLoading } from "../PulseLoading";
 
 export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
@@ -37,34 +38,35 @@ export function Posts() {
   return (
     <>
       <ul className="flex flex-col mt-small items-center">
-        {posts?.map((post: PostType, index: number) => (
-          <li
-            key={`${post.id}-${index}`}
-            className="max-w-[420px] py-small xs:mx-gutter border-b border-slate-200"
-          >
-            <div className="flex flex-col gap-small w-full justify-center">
-              <Author
-                name={post?.user?.name}
-                profileUrl={post?.user?.profileUrl}
-              />
-
-              <Media.Wrapper
-                fit="cover"
-                title={post.description}
-                images={getImages(post.media)}
-              />
-
-              <section className="px-gutter xs:px-0">
-                <ActionBar />
-
-                <LikeComment
-                  post={post}
-                  onClickComments={() => onClickComments(post)}
+        {posts &&
+          posts?.map((post: PostType, index: number) => (
+            <li
+              key={`${post.id}-${index}`}
+              className="max-w-[420px] py-small xs:mx-gutter border-b border-slate-200"
+            >
+              <div className="flex flex-col gap-small w-full justify-center">
+                <Author
+                  name={post?.user?.name}
+                  profileUrl={post?.user?.profileUrl}
                 />
-              </section>
-            </div>
-          </li>
-        ))}
+
+                <Media.Wrapper
+                  fit="cover"
+                  title={post.description}
+                  images={getImages(post.media)}
+                />
+
+                <section className="px-gutter xs:px-0">
+                  <ActionBar />
+
+                  <LikeComment
+                    post={post}
+                    onClickComments={() => onClickComments(post)}
+                  />
+                </section>
+              </div>
+            </li>
+          ))}
       </ul>
 
       <Modal.ModalDialog onClose={onModalClose} open={!!modal?.open}>
@@ -81,7 +83,9 @@ export function Posts() {
         </Modal.ModalBody>
       </Modal.ModalDialog>
 
-      <LoadMore isFetching={isFetching} nextPage={fetchNextPage} />
+      <LoadMore isFetching={isFetching} nextPage={fetchNextPage}>
+        <PulseLoading.Comments />
+      </LoadMore>
     </>
   );
 }

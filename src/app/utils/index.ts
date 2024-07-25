@@ -1,9 +1,6 @@
 import moment from "moment";
 
-export const baseUrl =
-  typeof window === "undefined"
-    ? "http://localhost:3000/"
-    : window?.location?.href;
+export const baseUrl = "http://localhost:5555";
 export const serverUrl = "http://localhost:5555/graphql";
 
 export async function fetchGraphQl(query: string) {
@@ -23,7 +20,7 @@ export const rootQueries = {
   fetchUsers: {
     name: "fetchUsers",
     queryFn: () => {
-      return fetch(`${baseUrl}api/users`).then((res) => res.json());
+      return fetch(`${baseUrl}/users`).then((res) => res.json());
     },
   },
 };

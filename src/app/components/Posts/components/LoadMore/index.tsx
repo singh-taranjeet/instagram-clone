@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect, useRef } from "react";
 
 function useElementOnScreen(ref: any) {
@@ -29,34 +30,34 @@ function useElementOnScreen(ref: any) {
   return isVisible;
 }
 
-export function LoadMore(props: { nextPage(): void; isFetching: boolean }) {
-  const { nextPage, isFetching } = props;
+interface Props {
+  nextPage(): void;
+  isFetching: boolean;
+  children: React.ReactNode;
+}
+
+export function LoadMore(props: Props) {
+  const { nextPage, isFetching, children } = props;
   const componentRef = useRef<HTMLDivElement | null>(null);
   const isVisible = useElementOnScreen(componentRef);
 
   const timerId = useRef<NodeJS.Timeout | null>(null);
 
-  function checkVisibility() {
-    if (isVisible) {
-      nextPage();
-    }
-  }
-
-  function clearTimer() {
-    timerId.current && clearInterval(timerId.current);
-  }
-
   // set timer if playerData is empty
   useEffect(() => {
+    const id = timerId.current;
+    function checkVisibility() {
+      if (isVisible) {
+        nextPage();
+      }
+    }
     timerId.current = setInterval(() => {
       checkVisibility();
     }, 1000);
-    return clearTimer;
-  }, [isVisible]);
+    return () => {
+      id && clearInterval(id);
+    };
+  }, [isVisible, nextPage]);
 
-  return (
-    <div ref={componentRef}>
-      {isFetching ? <div>Loading...</div> : <div>Swipe to load more</div>}
-    </div>
-  );
+  return <div ref={componentRef}>{isFetching ? children : null}</div>;
 }

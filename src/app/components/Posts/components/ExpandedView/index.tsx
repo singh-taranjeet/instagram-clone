@@ -14,6 +14,7 @@ import { useScreenSize, breakPoints } from "@/app/utils/hooks/useScreenSize";
 import { AddComment } from "../AddComment";
 import { useComments } from "./useComments";
 import { LoadMore } from "../LoadMore";
+import { PulseLoading } from "@/app/components/PulseLoading";
 
 type Props = Omit<ModalType, "open">;
 type ExpandedViewProps = Props & {
@@ -87,7 +88,9 @@ export function ExpandedView(props: ExpandedViewProps) {
               </div>
             </React.Fragment>
           ))}
-          <LoadMore isFetching={isFetching} nextPage={fetchNextPage} />
+          <LoadMore isFetching={isFetching} nextPage={fetchNextPage}>
+            <PulseLoading.Comments />
+          </LoadMore>
         </div>
         {/* Actions and likes */}
         {isDesktop ? (

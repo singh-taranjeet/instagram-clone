@@ -1,5 +1,4 @@
 import { fetchGraphQl } from "@/app/utils";
-import { CommentType } from "../types";
 
 const post = {
   gql: function GET_POSTS_QUERY(page: number) {
