@@ -69,10 +69,10 @@ function ModalDialog(
   useEffect(() => {
     if (open) {
       // add class to body to prevent scrolling, stop-body-scrolling
-      // document.body.classList.add("stop-body-scrolling");
+      document.body.classList.add("stop-body-scrolling");
     } else {
       // remove class to body to allow scrolling
-      // document.body.classList.remove("stop-body-scrolling");
+      document.body.classList.remove("stop-body-scrolling");
     }
   }, [open]);
 
