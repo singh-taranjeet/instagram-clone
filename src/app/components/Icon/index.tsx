@@ -12,12 +12,17 @@ export const Icon = {
   Posts: PostsIcon,
   Share: ShareIcon,
   BookMark: BookMarkIcon,
+  Arrow: ArrowIcon,
+  Cross: CrossIcon,
+  Verified: VerifiedIcon,
+  Back: BackIcon,
 };
 
-function SmallLogo() {
+function SmallLogo(props: { label?: string; className?: string }) {
   return (
     <svg
-      aria-label="Instagram"
+      aria-label={props.label || "Instagram"}
+      className={props.className || ""}
       fill="currentColor"
       height="24"
       role="img"
@@ -30,10 +35,11 @@ function SmallLogo() {
   );
 }
 
-function BookMarkIcon() {
+function BookMarkIcon(props: { label?: string; className?: string }) {
   return (
     <svg
-      aria-label="Save"
+      aria-label={props.label || "Save"}
+      className={props.className || ""}
       fill="currentColor"
       height="24"
       role="img"
@@ -53,10 +59,11 @@ function BookMarkIcon() {
   );
 }
 
-function ShareIcon() {
+function ShareIcon(props: { label?: string; className?: string }) {
   return (
     <svg
-      aria-label="Share Post"
+      aria-label={props.label || "Share Post"}
+      className={props.className || ""}
       fill="currentColor"
       height="24"
       role="img"
@@ -85,10 +92,11 @@ function ShareIcon() {
   );
 }
 
-function CommentIcon() {
+function CommentIcon(props: { label?: string; className?: string }) {
   return (
     <svg
-      aria-label="Comment"
+      aria-label={props.label || "Comment"}
+      className={props.className || ""}
       fill="currentColor"
       height="24"
       role="img"
@@ -107,10 +115,11 @@ function CommentIcon() {
   );
 }
 
-function PlusIcon() {
+function PlusIcon(props: { label?: string; className?: string }) {
   return (
     <svg
-      aria-label="Home"
+      aria-label={props.label || "Plus"}
+      className={props.className || ""}
       fill="currentColor"
       height="24"
       role="img"
@@ -152,10 +161,11 @@ function PlusIcon() {
   );
 }
 
-function FavIcon() {
+function FavIcon(props: { label?: string; className?: string }) {
   return (
     <svg
-      aria-label="Notifications"
+      aria-label={props.label || "Notifications"}
+      className={props.className || ""}
       fill="currentColor"
       height="24"
       role="img"
@@ -168,10 +178,11 @@ function FavIcon() {
   );
 }
 
-function DownIcon() {
+function DownIcon(props: { label?: string; className?: string }) {
   return (
     <svg
-      aria-label="Down Chevron Icon"
+      aria-label={props.label || "Down Chevron Icon"}
+      className={props.className || ""}
       fill="currentColor"
       height="12"
       role="img"
@@ -184,7 +195,24 @@ function DownIcon() {
   );
 }
 
-function Logo() {
+function ArrowIcon(props: { label?: string; className?: string }) {
+  return (
+    <svg
+      aria-label={props.label || "Arrow Chevron Icon"}
+      className={`${props.className || ""}`}
+      fill="currentColor"
+      height="12"
+      role="img"
+      viewBox="0 0 24 24"
+      width="12"
+    >
+      <title>Arrow Chevron Icon</title>
+      <path d="M12 17.502a1 1 0 0 1-.707-.293l-9-9.004a1 1 0 0 1 1.414-1.414L12 15.087l8.293-8.296a1 1 0 0 1 1.414 1.414l-9 9.004a1 1 0 0 1-.707.293Z"></path>
+    </svg>
+  );
+}
+
+function Logo(props: { label?: string; className?: string }) {
   return (
     <svg
       aria-label="Instagram"
@@ -206,10 +234,11 @@ function Logo() {
   );
 }
 
-function HomeIcon() {
+function HomeIcon(props: { label?: string; className?: string }) {
   return (
     <svg
-      aria-label="Home"
+      aria-label={props.label || "Home"}
+      className={props.className || ""}
       fill="currentColor"
       height="24"
       role="img"
@@ -222,10 +251,11 @@ function HomeIcon() {
   );
 }
 
-function SearchIcon() {
+function SearchIcon(props: { label?: string; className?: string }) {
   return (
     <svg
-      aria-label="Explore"
+      aria-label={props.label || "Explore"}
+      className={props.className || ""}
       fill="currentColor"
       height="24"
       role="img"
@@ -256,10 +286,11 @@ function SearchIcon() {
   );
 }
 
-function PostsIcon() {
+function PostsIcon(props: { label?: string; className?: string }) {
   return (
     <svg
-      aria-label="Reels"
+      aria-label={props.label || "Reels"}
+      className={props.className || ""}
       fill="currentColor"
       height="24"
       role="img"
@@ -311,6 +342,78 @@ function PostsIcon() {
         d="M9.763 17.664a.908.908 0 0 1-.454-.787V11.63a.909.909 0 0 1 1.364-.788l4.545 2.624a.909.909 0 0 1 0 1.575l-4.545 2.624a.91.91 0 0 1-.91 0Z"
         fillRule="evenodd"
       ></path>
+    </svg>
+  );
+}
+
+function CrossIcon(props: { label?: string; className?: string }) {
+  return (
+    <svg
+      fill="currentColor"
+      aria-label={props.label || "Close"}
+      className={props.className || ""}
+      height="18"
+      role="img"
+      viewBox="0 0 24 24"
+      width="18"
+    >
+      <title>Close</title>
+      <polyline
+        fill="none"
+        points="20.643 3.357 12 12 3.353 20.647"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="3"
+      ></polyline>
+      <line
+        fill="none"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="3"
+        x1="20.649"
+        x2="3.354"
+        y1="20.649"
+        y2="3.354"
+      ></line>
+    </svg>
+  );
+}
+
+function VerifiedIcon(props: { label?: string; className?: string }) {
+  return (
+    <svg
+      aria-label={props.label || "Verified"}
+      className={props.className || ""}
+      fill="rgb(0, 149, 246)"
+      height="12"
+      role="img"
+      viewBox="0 0 40 40"
+      width="12"
+    >
+      <title>Verified</title>
+      <path
+        d="M19.998 3.094 14.638 0l-2.972 5.15H5.432v6.354L0 14.64 3.094 20 0 25.359l5.432 3.137v5.905h5.975L14.638 40l5.36-3.094L25.358 40l3.232-5.6h6.162v-6.01L40 25.359 36.905 20 40 14.641l-5.248-3.03v-6.46h-6.419L25.358 0l-5.36 3.094Zm7.415 11.225 2.254 2.287-11.43 11.5-6.835-6.93 2.244-2.258 4.587 4.581 9.18-9.18Z"
+        fillRule="evenodd"
+      ></path>
+    </svg>
+  );
+}
+
+function BackIcon(props: { label?: string; className?: string }) {
+  return (
+    <svg
+      aria-label={props.label || "Back"}
+      className={props.className || ""}
+      fill="currentColor"
+      height="24"
+      role="img"
+      viewBox="0 0 24 24"
+      width="24"
+    >
+      <title>Back</title>
+      <path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path>
     </svg>
   );
 }

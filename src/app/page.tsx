@@ -3,21 +3,22 @@ import {
   QueryClient,
   HydrationBoundary,
 } from "@tanstack/react-query";
-import { queries } from "./utils";
 import { Status } from "./components/Status";
 import { Posts } from "./components/Posts";
+import { rootQueries } from "./utils";
+import { queries } from "./components/Posts/queries";
 
 export default async function Home() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["users"],
-    queryFn: queries.fetchUsers,
+    queryKey: [rootQueries.fetchUsers.name],
+    queryFn: rootQueries.fetchUsers.queryFn,
   });
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["posts"],
-    queryFn: queries.fetchPosts,
+    queryKey: [queries.fetchPosts.name],
+    queryFn: queries.fetchPosts.queryFn,
     initialPageParam: 0,
   });
 

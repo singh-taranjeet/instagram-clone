@@ -3,11 +3,28 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https",
-        hostname: "via.placeholder.com",
-        port: "",
-        pathname: "**",
+        protocol: "http",
+        hostname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+      // {
+      //   protocol: "https",
+      //   hostname: "via.placeholder.com",
+      //   port: "",
+      //   pathname: "**",
+      // },
+      // {
+      //   protocol: "https",
+      //   hostname: "res.cloudinary.com",
+      // },
+      // // add host name loremflickr.com
+      // {
+      //   protocol: "https",
+      //   hostname: "loremflickr.com",
+      // },
     ],
   },
 };

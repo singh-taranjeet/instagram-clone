@@ -1,0 +1,14 @@
+.expanded-view .desktop {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.expanded-view-container {
+  height: calc(100vh - 200px);
+}
+
+@media only screen and (max-width: 640px) {
+  .expanded-view-container {
+    height: calc(100vh - 48px);
+  }
+}

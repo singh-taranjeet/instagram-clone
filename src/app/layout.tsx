@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import ReactQueryProvider from "./components/ReactQueryProvider";
+import { ApolloClientProvider } from "./components/ApolloClientProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
