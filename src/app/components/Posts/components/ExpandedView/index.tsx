@@ -1,3 +1,4 @@
+"use client";
 import { User } from "@/app/components/UserImage";
 import React, { useMemo } from "react";
 import { CommentType, ModalType } from "../../types";
@@ -15,25 +16,43 @@ import { AddComment } from "../AddComment";
 import { useComments } from "./useComments";
 import { LoadMore } from "../LoadMore";
 import { PulseLoading } from "@/app/components/PulseLoading";
+import { useSubscription } from "@apollo/client";
 
 type Props = Omit<ModalType, "open">;
 type ExpandedViewProps = Props & {
   onClose(): void;
 };
 
+const limit = 10;
+
 export function ExpandedView(props: ExpandedViewProps) {
   const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
   const { selectedPost, onClose } = props;
+  const [page, setPage] = React.useState(0);
+  const [pageEnd, setPageEnd] = React.useState(false);
 
-  const { data, isFetching, fetchNextPage, refetch } = useComments(
-    selectedPost.id
-  );
+  const { data, loading, fetchMore } = useComments(selectedPost.id);
 
-  const comments = useMemo(() => {
-    return data?.pages.reduce((acc, page) => {
-      return [...acc, ...page];
-    }, []);
-  }, [data]);
+  function getMore() {
+    fetchMore({
+      variables: {
+        commentPage: page + 1,
+        limit,
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        const newEntries = fetchMoreResult.comments;
+        if (newEntries.length === 0) {
+          setPageEnd(true);
+          return previousResult;
+        }
+        setPage(page + 1);
+        setPageEnd(false);
+        return {
+          comments: [...previousResult.comments, ...newEntries],
+        };
+      },
+    });
+  }
 
   return (
     <section className="flex justify-center gap-0 h-full">
@@ -62,8 +81,8 @@ export function ExpandedView(props: ExpandedViewProps) {
           />
         </div>
         <div className="mt-12 sm:mt-0 overflow-y-scroll expanded-view-container pb-[145px]">
-          {comments?.map((comment: CommentType, index: number) => (
-            <React.Fragment key={`${comment.user.id}${index}`}>
+          {data?.comments?.map((comment: CommentType, index: number) => (
+            <React.Fragment key={`${comment.id}`}>
               <div className="flex p-gutter items-censter">
                 <div>
                   <User.image
@@ -88,9 +107,11 @@ export function ExpandedView(props: ExpandedViewProps) {
               </div>
             </React.Fragment>
           ))}
-          <LoadMore isFetching={isFetching} nextPage={fetchNextPage}>
-            <PulseLoading.Comments />
-          </LoadMore>
+          {pageEnd ? null : (
+            <LoadMore isFetching={loading} nextPage={getMore}>
+              <PulseLoading.Comments />
+            </LoadMore>
+          )}
         </div>
         {/* Actions and likes */}
         {isDesktop ? (
@@ -102,11 +123,11 @@ export function ExpandedView(props: ExpandedViewProps) {
               </span>
             </section>
             {/* Show add a new comment in mobile */}
-            <AddComment onPost={refetch} selectedPost={selectedPost} />
+            {/* <AddComment onPost={refetch} selectedPost={selectedPost} /> */}
           </section>
         ) : (
           <section className=" absolute bottom-0 w-full">
-            <AddComment onPost={refetch} selectedPost={selectedPost} />
+            {/* <AddComment onPost={refetch} selectedPost={selectedPost} /> */}
           </section>
         )}
       </section>
