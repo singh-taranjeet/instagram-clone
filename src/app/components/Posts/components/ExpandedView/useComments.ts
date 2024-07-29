@@ -99,15 +99,18 @@ export function useComments(params: UseCommentsProps) {
       document: COMMENTS_SUBSCRIPTION,
       variables: { postId: Number(postId) },
       updateQuery: (prev, { subscriptionData }) => {
-        console.log("Subscription Data", subscriptionData);
         if (!subscriptionData.data) return prev;
         const newComment = subscriptionData.data.commentAdded;
+        const exist = prev.comments.find(
+          (item: any) => item.id === newComment.id
+        );
+        if (exist) return prev;
         return {
           comments: [newComment, ...prev.comments],
         };
       },
     });
-  }, []);
+  }, [subscribeToMore, postId]);
 
   return {
     data,
