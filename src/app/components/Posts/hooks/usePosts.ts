@@ -9,6 +9,7 @@ export function usePosts() {
       getNextPageParam: (lastPage, pages) => {
         return pages.length;
       },
+      // TODO fix initial page param
       initialPageParam: 10, // Provide the initialPageParam value
     });
 
