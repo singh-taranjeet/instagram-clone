@@ -16,43 +16,19 @@ import { AddComment } from "../AddComment";
 import { useComments } from "./useComments";
 import { LoadMore } from "../LoadMore";
 import { PulseLoading } from "@/app/components/PulseLoading";
-import { useSubscription } from "@apollo/client";
 
 type Props = Omit<ModalType, "open">;
 type ExpandedViewProps = Props & {
   onClose(): void;
 };
 
-const limit = 10;
-
 export function ExpandedView(props: ExpandedViewProps) {
   const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
   const { selectedPost, onClose } = props;
-  const [page, setPage] = React.useState(0);
-  const [pageEnd, setPageEnd] = React.useState(false);
 
-  const { data, loading, fetchMore } = useComments(selectedPost.id);
-
-  function getMore() {
-    fetchMore({
-      variables: {
-        commentPage: page + 1,
-        limit,
-      },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        const newEntries = fetchMoreResult.comments;
-        if (newEntries.length === 0) {
-          setPageEnd(true);
-          return previousResult;
-        }
-        setPage(page + 1);
-        setPageEnd(false);
-        return {
-          comments: [...previousResult.comments, ...newEntries],
-        };
-      },
-    });
-  }
+  const { data, loading, fetchMore, pageEnd } = useComments({
+    postId: selectedPost.id,
+  });
 
   return (
     <section className="flex justify-center gap-0 h-full">
@@ -108,7 +84,7 @@ export function ExpandedView(props: ExpandedViewProps) {
             </React.Fragment>
           ))}
           {pageEnd ? null : (
-            <LoadMore isFetching={loading} nextPage={getMore}>
+            <LoadMore isFetching={loading} nextPage={fetchMore}>
               <PulseLoading.Comments />
             </LoadMore>
           )}
@@ -123,11 +99,11 @@ export function ExpandedView(props: ExpandedViewProps) {
               </span>
             </section>
             {/* Show add a new comment in mobile */}
-            {/* <AddComment onPost={refetch} selectedPost={selectedPost} /> */}
+            <AddComment onPost={() => {}} selectedPost={selectedPost} />
           </section>
         ) : (
           <section className=" absolute bottom-0 w-full">
-            {/* <AddComment onPost={refetch} selectedPost={selectedPost} /> */}
+            <AddComment onPost={() => {}} selectedPost={selectedPost} />
           </section>
         )}
       </section>

@@ -1,8 +1,16 @@
 // import { useInfiniteQuery } from "@tanstack/react-query";
 // import { queries } from "../../queries";
-import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery, useSubscription } from "@apollo/client";
+import React from "react";
 
-export function useComments(postId: string) {
+interface UseCommentsProps {
+  postId: string;
+}
+const limit = 10;
+export function useComments(params: UseCommentsProps) {
+  const { postId } = params;
+  const [page, setPage] = React.useState(0);
+  const [pageEnd, setPageEnd] = React.useState(false);
   // const {
   //   data,
   //   error,
@@ -38,17 +46,64 @@ export function useComments(postId: string) {
     }
   `;
 
-  const { loading, data, fetchMore, error } = useQuery(fetchCommentQuery, {
-    variables: {
-      postId: Number(postId),
-      commentPage: 0,
-      limit: 10,
-    },
+  const COMMENTS_SUBSCRIPTION = gql`
+    subscription CommentAdded($postId: ID!) {
+      commentAdded(postId: $postId) {
+        content
+        likes
+        id
+        createdAt
+        user {
+          name
+          id
+          profileUrl
+        }
+      }
+    }
+  `;
+
+  function more() {
+    fetchMore({
+      variables: {
+        commentPage: page + 1,
+        limit,
+      },
+      updateQuery: (previousResult, { fetchMoreResult }) => {
+        const newEntries = fetchMoreResult.comments;
+        if (newEntries.length === 0) {
+          setPageEnd(true);
+          return previousResult;
+        }
+        setPage(page + 1);
+        setPageEnd(false);
+        return {
+          comments: [...previousResult.comments, ...newEntries],
+        };
+      },
+    });
+  }
+
+  const subscription = useSubscription(COMMENTS_SUBSCRIPTION, {
+    variables: { postId: Number(postId) },
   });
+
+  console.log("New Comment added", subscription);
+
+  const { loading, data, fetchMore, subscribeToMore } = useQuery(
+    fetchCommentQuery,
+    {
+      variables: {
+        postId: Number(postId),
+        commentPage: 0,
+        limit: 10,
+      },
+    }
+  );
 
   return {
     data,
-    fetchMore,
+    fetchMore: more,
     loading,
+    pageEnd,
   };
 }

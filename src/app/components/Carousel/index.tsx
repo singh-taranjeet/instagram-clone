@@ -42,7 +42,7 @@ export default function CarouselWrapper(
 ) {
   const width = useScreenSize();
   const sliderRef = useRef<Slider | null>(null);
-  console.log("No of slides to show: ", slidesToShow(width), width);
+  // console.log("No of slides to show: ", slidesToShow(width), width);
 
   const settings = {
     className: "center",

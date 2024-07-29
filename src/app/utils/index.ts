@@ -44,3 +44,5 @@ export function timeFromNow(date: Date) {
     return fromNow;
   }
 }
+
+export * from "./apollo.utils";
