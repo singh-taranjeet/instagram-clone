@@ -1,7 +1,7 @@
 // import { useInfiniteQuery } from "@tanstack/react-query";
 // import { queries } from "../../queries";
 import { gql, useQuery, useSubscription } from "@apollo/client";
-import React from "react";
+import React, { useEffect } from "react";
 
 interface UseCommentsProps {
   postId: string;
@@ -83,12 +83,6 @@ export function useComments(params: UseCommentsProps) {
     });
   }
 
-  const subscription = useSubscription(COMMENTS_SUBSCRIPTION, {
-    variables: { postId: Number(postId) },
-  });
-
-  console.log("New Comment added", subscription);
-
   const { loading, data, fetchMore, subscribeToMore } = useQuery(
     fetchCommentQuery,
     {
@@ -99,6 +93,21 @@ export function useComments(params: UseCommentsProps) {
       },
     }
   );
+
+  useEffect(() => {
+    subscribeToMore({
+      document: COMMENTS_SUBSCRIPTION,
+      variables: { postId: Number(postId) },
+      updateQuery: (prev, { subscriptionData }) => {
+        console.log("Subscription Data", subscriptionData);
+        if (!subscriptionData.data) return prev;
+        const newComment = subscriptionData.data.commentAdded;
+        return {
+          comments: [newComment, ...prev.comments],
+        };
+      },
+    });
+  }, []);
 
   return {
     data,

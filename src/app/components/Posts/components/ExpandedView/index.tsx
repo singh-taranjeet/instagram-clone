@@ -99,11 +99,11 @@ export function ExpandedView(props: ExpandedViewProps) {
               </span>
             </section>
             {/* Show add a new comment in mobile */}
-            <AddComment onPost={() => {}} selectedPost={selectedPost} />
+            <AddComment selectedPost={selectedPost} />
           </section>
         ) : (
           <section className=" absolute bottom-0 w-full">
-            <AddComment onPost={() => {}} selectedPost={selectedPost} />
+            <AddComment selectedPost={selectedPost} />
           </section>
         )}
       </section>

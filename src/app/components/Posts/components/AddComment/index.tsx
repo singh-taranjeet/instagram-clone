@@ -6,11 +6,10 @@ import { queries } from "../../queries";
 
 type Props = {
   selectedPost: PostType;
-  onPost(): void;
 };
 
 export function AddComment(props: Props) {
-  const { selectedPost, onPost } = props;
+  const { selectedPost } = props;
 
   async function createComment(data: { postId: string; content: string }) {
     const { postId, content } = data;
@@ -30,7 +29,7 @@ export function AddComment(props: Props) {
       { postId: selectedPost.id, content },
       {
         onSuccess: () => {
-          onPost();
+          setContent("");
         },
       }
     );
@@ -45,6 +44,7 @@ export function AddComment(props: Props) {
         />
       </div>
       <textarea
+        value={content}
         onChange={handleChange}
         className="w-full outline-none overflow-y-hidden h-5 max-h-20 text-sm resize-none flex"
         aria-label="Add a comment"

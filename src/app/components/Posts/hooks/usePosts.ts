@@ -9,7 +9,7 @@ export function usePosts() {
       getNextPageParam: (lastPage, pages) => {
         return pages.length;
       },
-      initialPageParam: 0, // Provide the initialPageParam value
+      initialPageParam: 10, // Provide the initialPageParam value
     });
 
   return {
