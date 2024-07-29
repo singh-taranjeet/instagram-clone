@@ -114,13 +114,4 @@ export const queries = {
       return data.createComment;
     },
   },
-  fetchComments: {
-    name: "fetchComments",
-    queryFn: (postId: string) => {
-      //return type is ResponseType
-      return async (params: { pageParam: number }) => {
-        return comment.fetch.query(postId, params.pageParam);
-      };
-    },
-  },
 };
