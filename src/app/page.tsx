@@ -19,7 +19,8 @@ export default async function Home() {
   await queryClient.prefetchInfiniteQuery({
     queryKey: [queries.fetchPosts.name],
     queryFn: queries.fetchPosts.queryFn,
-    initialPageParam: 0,
+    // TODO fix initial page param
+    initialPageParam: 10,
   });
 
   return (
