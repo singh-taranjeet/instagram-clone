@@ -21,8 +21,8 @@ export function Posts() {
     setModal(undefined);
   }
 
-  function openCommentsModal(post: PostType) {
-    setModal({ open: true, selectedPost: post });
+  function openCommentsModal(postId: string) {
+    setModal({ open: true, selectedPost: postId });
   }
 
   const posts = useMemo(() => {
@@ -57,12 +57,12 @@ export function Posts() {
                 <section className="px-gutter xs:px-0">
                   <ActionBar
                     post={post}
-                    onCommentClick={() => openCommentsModal(post)}
+                    onCommentClick={() => openCommentsModal(post.id)}
                   />
 
                   <LikeComment
                     post={post}
-                    onClickComments={() => openCommentsModal(post)}
+                    onClickComments={() => openCommentsModal(post.id)}
                   />
                 </section>
               </div>
