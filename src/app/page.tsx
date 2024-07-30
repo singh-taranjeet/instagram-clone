@@ -20,7 +20,7 @@ export default async function Home() {
     queryKey: [queries.fetchPosts.name],
     queryFn: queries.fetchPosts.queryFn,
     // TODO fix initial page param
-    initialPageParam: 10,
+    initialPageParam: 0,
   });
 
   return (

@@ -12,6 +12,7 @@ export async function fetchGraphQl(query: string) {
     headers: {
       "Content-Type": "application/json",
     },
+    cache: "no-store",
   });
   return data.json();
 }

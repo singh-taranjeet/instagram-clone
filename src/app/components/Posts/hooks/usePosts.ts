@@ -10,7 +10,7 @@ export function usePosts() {
         return pages.length;
       },
       // TODO fix initial page param
-      initialPageParam: 10, // Provide the initialPageParam value
+      initialPageParam: 0, // Provide the initialPageParam value
     });
 
   return {

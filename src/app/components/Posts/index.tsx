@@ -12,15 +12,6 @@ import { ActionBar } from "./components/ActionBar";
 import { Author } from "./components/Author";
 import { LikeComment } from "./components/LikeComment";
 import { PulseLoading } from "../PulseLoading";
-import { gql, useMutation } from "@apollo/client";
-
-const incrementLikeQuery = gql`
-  mutation UpdatePost($id: ID!, $updatePostInput: UpdatePostInput!) {
-    updatePost(id: $id, updatePostInput: $updatePostInput) {
-      likes
-    }
-  }
-`;
 
 export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
@@ -39,20 +30,6 @@ export function Posts() {
       return [...acc, ...page];
     }, []);
   }, [data]);
-
-  function onClickLike(post: PostType) {
-    incrementLike({
-      variables: {
-        id: post.id,
-        updatePostInput: {
-          likes: post.likes + 1,
-          fields: ["likes"],
-        },
-      },
-    });
-  }
-
-  const [incrementLike, mutation] = useMutation(incrementLikeQuery);
 
   return (
     <>
@@ -79,7 +56,7 @@ export function Posts() {
 
                 <section className="px-gutter xs:px-0">
                   <ActionBar
-                    onLikeClick={() => onClickLike(post)}
+                    post={post}
                     onCommentClick={() => openCommentsModal(post)}
                   />
 
