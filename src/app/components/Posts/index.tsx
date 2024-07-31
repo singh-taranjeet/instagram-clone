@@ -51,7 +51,6 @@ export function Posts() {
                   title={post.description}
                   images={getImages(post.media)}
                 />
-                <p>{post.id}</p>
 
                 <section className="px-gutter xs:px-0">
                   <ActionBar
