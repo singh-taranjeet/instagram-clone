@@ -1,9 +1,11 @@
 "use client";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { splitLink } from "../utils";
 
 const client = new ApolloClient({
   uri: "http://localhost:5555/graphql",
   cache: new InMemoryCache(),
+  link: splitLink,
   ssrMode: true,
 });
 

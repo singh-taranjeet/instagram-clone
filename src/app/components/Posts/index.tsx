@@ -17,14 +17,12 @@ export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
   const [modal, setModal] = useState<ModalType | undefined>(undefined);
 
-  // console.log("modal", modal);
-
   function onModalClose() {
     setModal(undefined);
   }
 
-  function onClickComments(post: PostType) {
-    setModal({ open: true, selectedPost: post });
+  function openCommentsModal(postId: string) {
+    setModal({ open: true, selectedPost: postId });
   }
 
   const posts = useMemo(() => {
@@ -32,8 +30,6 @@ export function Posts() {
       return [...acc, ...page];
     }, []);
   }, [data]);
-
-  // console.log("posts sdds", posts);
 
   return (
     <>
@@ -57,11 +53,14 @@ export function Posts() {
                 />
 
                 <section className="px-gutter xs:px-0">
-                  <ActionBar />
+                  <ActionBar
+                    post={post}
+                    onCommentClick={() => openCommentsModal(post.id)}
+                  />
 
                   <LikeComment
                     post={post}
-                    onClickComments={() => onClickComments(post)}
+                    onClickComments={() => openCommentsModal(post.id)}
                   />
                 </section>
               </div>

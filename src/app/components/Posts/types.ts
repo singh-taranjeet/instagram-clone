@@ -30,7 +30,7 @@ export interface CommentType {
 
 export interface ModalType {
   open: boolean;
-  selectedPost: PostType;
+  selectedPost: string;
 }
 
 export type ObjectFitType = "cover" | "contain";
