@@ -18,11 +18,28 @@ import { LoadMore } from "../LoadMore";
 import { PulseLoading } from "@/app/components/PulseLoading";
 import { getQueryClient } from "@/app/components/ReactQueryProvider";
 import { queries } from "../../queries";
+import { gql, useMutation } from "@apollo/client";
 
 type Props = Omit<ModalType, "open">;
 type ExpandedViewProps = Props & {
   onClose(): void;
 };
+
+const incrementLikeQuery = gql`
+  mutation UpdatePost($id: ID!, $updatePostInput: UpdatePostInput!) {
+    updatePost(id: $id, updatePostInput: $updatePostInput) {
+      likes
+    }
+  }
+`;
+
+function onClickReply() {
+  // focus on the textarea with id AddAComment
+  const textarea = document.getElementById("AddAComment");
+  if (textarea) {
+    textarea.focus();
+  }
+}
 
 export function ExpandedView(props: ExpandedViewProps) {
   const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
@@ -36,7 +53,6 @@ export function ExpandedView(props: ExpandedViewProps) {
 
   // get post of id selectedPost
   useEffect(() => {
-    console.log("side effect");
     posts.pages.forEach((page: any) => {
       page.forEach((item: any) => {
         if (item.id === props.selectedPost) {
@@ -80,26 +96,39 @@ export function ExpandedView(props: ExpandedViewProps) {
             </div>
             <div className="mt-12 sm:mt-0 overflow-y-scroll expanded-view-container pb-[145px]">
               {data?.comments?.map((comment: CommentType, index: number) => (
-                <React.Fragment key={`${comment.id}`}>
-                  <div className="flex p-gutter items-censter">
+                <React.Fragment key={`${comment.id}-${index}`}>
+                  <div className="flex p-gutter">
                     <div>
                       <User.image
                         profileUrl={comment.user.profileUrl}
                         name={comment.user.name}
                       />
                     </div>
-                    <div className="pl-small">
-                      <PostDetails
-                        comment={comment.content}
-                        userName={comment.user.name}
-                      />
+                    <div className="flex justify-between w-full">
+                      <div className="pl-small">
+                        <PostDetails
+                          comment={comment.content}
+                          userName={comment.user.name}
+                        />
 
-                      <div className="flex items-center gap-small text-text-gray text-extraExtraSmall">
-                        <span>{timeFromNow(selectedPost.createdAt)}</span>
-                        <span className="font-semibold">
-                          {comment.likes || 0} likes
-                        </span>
-                        <span className="font-semibold">Reply</span>
+                        <div className="flex items-center gap-small text-text-gray text-extraExtraSmall">
+                          <span>{timeFromNow(selectedPost.createdAt)}</span>
+                          <span className="font-semibold">
+                            {comment.likes || 0} likes
+                          </span>
+                          <span
+                            className="font-semibold"
+                            onClick={onClickReply}
+                          >
+                            Reply
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        className="flex items-center cursor-pointer"
+                        onClick={onClickLike}
+                      >
+                        <Icon.Fav className="w-3 h-h3" label="like"></Icon.Fav>
                       </div>
                     </div>
                   </div>

@@ -46,6 +46,7 @@ export function AddComment(props: Props) {
       <textarea
         value={content}
         onChange={handleChange}
+        id="AddAComment"
         className="w-full outline-none overflow-y-hidden h-5 max-h-20 text-sm resize-none flex"
         aria-label="Add a comment"
         placeholder="Add a comment..."
