@@ -19,8 +19,7 @@ interface ActionBarProps {
 export function ActionBar(props: ActionBarProps) {
   const { onCommentClick, post } = props;
 
-  const [incrementLike, { data, loading, error }] =
-    useMutation(incrementLikeQuery);
+  const [incrementLike] = useMutation(incrementLikeQuery);
 
   const queryClient = getQueryClient();
 

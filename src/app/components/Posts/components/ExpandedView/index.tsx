@@ -25,9 +25,9 @@ type ExpandedViewProps = Props & {
   onClose(): void;
 };
 
-const incrementLikeQuery = gql`
-  mutation UpdatePost($id: ID!, $updatePostInput: UpdatePostInput!) {
-    updatePost(id: $id, updatePostInput: $updatePostInput) {
+const incrementCommentLikeQuery = gql`
+  mutation UpdateComment($id: ID!, $updateCommentInput: UpdateCommentInput!) {
+    updateComment(id: $id, updateCommentInput: $updateCommentInput) {
       likes
     }
   }
@@ -50,6 +50,22 @@ export function ExpandedView(props: ExpandedViewProps) {
 
   const queryClient = getQueryClient();
   const posts: any = queryClient.getQueryData([queries.fetchPosts.name]);
+
+  const [incrementCommentLike] = useMutation(incrementCommentLikeQuery);
+
+  function onClickCommentLike(id: number, likes: number) {
+    const newLikes = likes + 1;
+
+    incrementCommentLike({
+      variables: {
+        id,
+        updateCommentInput: {
+          likes: newLikes,
+          fields: ["likes"],
+        },
+      },
+    });
+  }
 
   // get post of id selectedPost
   useEffect(() => {
@@ -126,7 +142,9 @@ export function ExpandedView(props: ExpandedViewProps) {
                       </div>
                       <div
                         className="flex items-center cursor-pointer"
-                        onClick={onClickLike}
+                        onClick={() =>
+                          onClickCommentLike(comment.id, comment.likes)
+                        }
                       >
                         <Icon.Fav className="w-3 h-h3" label="like"></Icon.Fav>
                       </div>
@@ -144,7 +162,10 @@ export function ExpandedView(props: ExpandedViewProps) {
             {isDesktop ? (
               <section className="bottom-0 absolute w-full bg-white border-y border-slate-200">
                 <section className="p-gutter flex flex-col gap-2">
-                  <ActionBar post={selectedPost} onCommentClick={() => {}} />
+                  <ActionBar
+                    post={selectedPost}
+                    onCommentClick={onClickReply}
+                  />
                   <span>
                     <Likes likes={selectedPost.likes} />
                   </span>
