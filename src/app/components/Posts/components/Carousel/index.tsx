@@ -190,8 +190,6 @@ export const Carousel = (props: {
                   stiffness: 300,
                   damping: 30,
                 },
-                opacity: { duration: 1 },
-                wdith: { duration: 300 },
               }}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
@@ -218,8 +216,8 @@ export const Carousel = (props: {
           ))}
         </div>
       </AnimatePresence>
-      <CarouselButton direction="prev" onClick={() => paginate(1)} />
-      <CarouselButton direction="next" onClick={() => paginate(-1)} />
+      <CarouselButton direction="prev" onClick={() => paginate(-1)} />
+      <CarouselButton direction="next" onClick={() => paginate(1)} />
     </div>
   );
 };
