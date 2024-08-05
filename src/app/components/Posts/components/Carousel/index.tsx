@@ -218,8 +218,8 @@ export const Carousel = (props: {
           ))}
         </div>
       </AnimatePresence>
-      <CarouselButton direction="prev" onClick={() => paginate(1)} />
-      <CarouselButton direction="next" onClick={() => paginate(-1)} />
+      <CarouselButton direction="prev" onClick={() => paginate(-1)} />
+      <CarouselButton direction="next" onClick={() => paginate(1)} />
     </div>
   );
 };
