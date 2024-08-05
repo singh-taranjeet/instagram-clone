@@ -12,7 +12,7 @@ function CarouselButton(props: {
   return (
     <button
       id={`carousel-${props.direction}`}
-      className={`${props.direction} shadow p-4 z-10 mx-small absolute bg-slate-50 bg-opacity-50 flex justify-center items-center !w-5 !h-5 transition-all duration-500 rounded-full bottom-1/2 ${
+      className={`${props.direction} shadow p-4 z-10 mx-small absolute bg-slate-50 bg-opacity-50 flex justify-center items-center !w-7 !h-7 transition-all duration-500 rounded-full bottom-1/2 ${
         props.direction === "next" ? "right-0" : "left-0"
       }`}
       onClick={props.onClick}
