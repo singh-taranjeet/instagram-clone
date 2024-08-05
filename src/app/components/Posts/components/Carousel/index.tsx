@@ -131,7 +131,7 @@ export const Carousel = (props: {
             <div
               onClick={() => setPageIndex(idx)}
               key={idx}
-              className={` mx-[2px] h-[8px] w-[8px] rounded-full cursor-pointer ${Math.abs(page) === idx ? "bg-slate-400" : "bg-slate-200"}`}
+              className={` mx-[2px] h-[7px] w-[7px] rounded-full cursor-pointer shadow ${Math.abs(page) === idx ? "bg-white" : "bg-[#8f908d]"}`}
             />
           ))}
         </div>
