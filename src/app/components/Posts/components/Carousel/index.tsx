@@ -30,7 +30,7 @@ const variants = {
   enter: (direction: number) => {
     return {
       x: direction > 0 ? 1000 : -1000,
-      opacity: 0,
+      opacity: 1,
     };
   },
   center: {
@@ -41,18 +41,12 @@ const variants = {
   exit: (direction: number) => {
     return {
       zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0,
+      x: direction > 0 ? 1000 : -1000,
+      opacity: 1,
     };
   },
 };
 
-/**
- * Experimenting with distilling swipe offset and velocity into a single variable, so the
- * less distance a user has swiped, the more velocity they need to register as a swipe.
- * Should accomodate longer swipes and short flicks without having binary checks on
- * just distance thresholds and velocity > 0.
- */
 const swipeConfidenceThreshold = 10000;
 const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
@@ -78,10 +72,15 @@ export const Carousel = (props: {
     setPage([page + newDirection, newDirection]);
   };
 
-  console.log("images", images);
+  function setPageIndex(index: number) {
+    const newDirection = index > page ? -1 : 1;
+    setPage([index, newDirection]);
+  }
+
+  console.log("page", page, imageIndex);
 
   return (
-    <div className="example-container">
+    <div className="example-container z-0">
       <AnimatePresence initial={false} custom={direction}>
         <div style={{ paddingBottom: `100%`, width: "min(420px, 100vw)" }}>
           <motion.img
@@ -107,10 +106,11 @@ export const Carousel = (props: {
             transition={{
               x: {
                 type: "spring",
-                stiffness: 300000,
-                damping: 3000000,
+                stiffness: 300,
+                damping: 30,
               },
-              //opacity: { duration: 0.1 },
+              opacity: { duration: 0.1 },
+              wdith: { duration: 0.5 },
             }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
@@ -125,6 +125,15 @@ export const Carousel = (props: {
               }
             }}
           />
+        </div>
+        <div className="absolute flex justify-center mb-2 bottom-0 z-1">
+          {images.map((_, idx) => (
+            <div
+              onClick={() => setPageIndex(idx)}
+              key={idx}
+              className={` mx-[2px] h-[8px] w-[8px] rounded-full cursor-pointer ${Math.abs(page) === idx ? "bg-slate-400" : "bg-slate-200"}`}
+            />
+          ))}
         </div>
       </AnimatePresence>
       <CarouselButton direction="prev" onClick={() => paginate(1)} />
