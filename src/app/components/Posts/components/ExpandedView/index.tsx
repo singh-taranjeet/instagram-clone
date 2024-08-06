@@ -128,7 +128,7 @@ export function ExpandedView(props: ExpandedViewProps) {
                         />
 
                         <div className="flex items-center gap-small text-text-gray text-extraExtraSmall">
-                          <span>{timeFromNow(selectedPost.createdAt)}</span>
+                          <span>{timeFromNow(comment.createdAt)}</span>
                           <span className="font-semibold">
                             {comment.likes || 0} likes
                           </span>

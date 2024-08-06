@@ -26,8 +26,8 @@ export const rootQueries = {
   },
 };
 
-export function timeFromNow(date: Date) {
-  const fromNow = moment(date).fromNow(true);
+export function timeFromNow(date: Date, suffix = true) {
+  const fromNow = moment(date).fromNow(suffix);
 
   if (fromNow === "a few seconds") {
     return "Just now";
