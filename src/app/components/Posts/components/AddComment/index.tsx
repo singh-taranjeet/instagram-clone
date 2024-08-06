@@ -3,6 +3,7 @@ import { User } from "@/app/components/UserImage";
 import { PostType } from "../../types";
 import { useMutation } from "@tanstack/react-query";
 import { queries } from "../../queries";
+import { Icon } from "@/app/components/Icon";
 
 type Props = {
   selectedPost: PostType;
@@ -52,7 +53,11 @@ export function AddComment(props: Props) {
         placeholder="Add a comment..."
       />
       <button onClick={onClickPost} className="text-blue-600 font-semibold">
-        Post
+        {createCommentMutation.isPending ? (
+          <Icon.Spinner className="animate-spin -ml-1 mr-3 h-5 w-5 text-blue-600" />
+        ) : (
+          "Post"
+        )}
       </button>
     </section>
   );

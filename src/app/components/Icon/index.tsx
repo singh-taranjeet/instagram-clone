@@ -16,9 +16,15 @@ export const Icon = {
   Cross: CrossIcon,
   Verified: VerifiedIcon,
   Back: BackIcon,
+  Spinner: SpinnerIcon,
 };
 
-function SmallLogo(props: { label?: string; className?: string }) {
+interface IconProps {
+  label?: string;
+  className?: string;
+}
+
+function SmallLogo(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Instagram"}
@@ -35,7 +41,7 @@ function SmallLogo(props: { label?: string; className?: string }) {
   );
 }
 
-function BookMarkIcon(props: { label?: string; className?: string }) {
+function BookMarkIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Save"}
@@ -59,7 +65,7 @@ function BookMarkIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function ShareIcon(props: { label?: string; className?: string }) {
+function ShareIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Share Post"}
@@ -92,7 +98,7 @@ function ShareIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function CommentIcon(props: { label?: string; className?: string }) {
+function CommentIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Comment"}
@@ -115,7 +121,7 @@ function CommentIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function PlusIcon(props: { label?: string; className?: string }) {
+function PlusIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Plus"}
@@ -161,7 +167,7 @@ function PlusIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function FavIcon(props: { label?: string; className?: string }) {
+function FavIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Notifications"}
@@ -178,7 +184,7 @@ function FavIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function DownIcon(props: { label?: string; className?: string }) {
+function DownIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Down Chevron Icon"}
@@ -195,7 +201,7 @@ function DownIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function ArrowIcon(props: { label?: string; className?: string }) {
+function ArrowIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Arrow Chevron Icon"}
@@ -212,7 +218,7 @@ function ArrowIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function Logo(props: { label?: string; className?: string }) {
+function Logo(props: IconProps) {
   return (
     <svg
       aria-label="Instagram"
@@ -234,7 +240,7 @@ function Logo(props: { label?: string; className?: string }) {
   );
 }
 
-function HomeIcon(props: { label?: string; className?: string }) {
+function HomeIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Home"}
@@ -251,7 +257,7 @@ function HomeIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function SearchIcon(props: { label?: string; className?: string }) {
+function SearchIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Explore"}
@@ -286,7 +292,7 @@ function SearchIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function PostsIcon(props: { label?: string; className?: string }) {
+function PostsIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Reels"}
@@ -346,7 +352,7 @@ function PostsIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function CrossIcon(props: { label?: string; className?: string }) {
+function CrossIcon(props: IconProps) {
   return (
     <svg
       fill="currentColor"
@@ -381,7 +387,7 @@ function CrossIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function VerifiedIcon(props: { label?: string; className?: string }) {
+function VerifiedIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Verified"}
@@ -401,7 +407,7 @@ function VerifiedIcon(props: { label?: string; className?: string }) {
   );
 }
 
-function BackIcon(props: { label?: string; className?: string }) {
+function BackIcon(props: IconProps) {
   return (
     <svg
       aria-label={props.label || "Back"}
@@ -414,6 +420,32 @@ function BackIcon(props: { label?: string; className?: string }) {
     >
       <title>Back</title>
       <path d="M21 17.502a.997.997 0 0 1-.707-.293L12 8.913l-8.293 8.296a1 1 0 1 1-1.414-1.414l9-9.004a1.03 1.03 0 0 1 1.414 0l9 9.004A1 1 0 0 1 21 17.502Z"></path>
+    </svg>
+  );
+}
+
+function SpinnerIcon(props: IconProps) {
+  return (
+    <svg
+      aria-label={props.label || "Spinner"}
+      className={props.className || ""}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        className="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        strokeWidth="4"
+      ></circle>
+      <path
+        className="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      ></path>
     </svg>
   );
 }
