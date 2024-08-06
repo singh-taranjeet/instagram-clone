@@ -123,14 +123,14 @@ function CarouselButton(
   return (
     <button
       onClick={onClick}
-      className={`shadow z-10 mx-small absolute bg-white flex justify-center items-center !w-5 !h-5 transition-all duration-500 rounded-full !-translate-y-8 -bottom-[5px] ${
+      className={`z-10 mx-small absolute bg-transparent flex justify-center items-center !w-[30px] !h-[30px] transition-all duration-500 rounded-full !-translate-y-8 -bottom-[5px] ${
         props.direction === "next" ? "right-0" : "left-0"
       }`}
       data-carousel-next
     >
-      <i className={props.direction === "next" ? "-rotate-90" : "rotate-90"}>
-        <Icon.Down className="text-slate-200" />
-      </i>
+      <i
+        className={`${props.direction === "next" ? "" : "rotate-180"} icons-background-image transparent-arrow`}
+      ></i>
     </button>
   );
 }

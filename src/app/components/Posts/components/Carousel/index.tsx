@@ -1,4 +1,3 @@
-import { Icon } from "@/app/components/Icon";
 import { useState } from "react";
 import "./styles.css";
 import { ObjectFitType } from "../../types";
@@ -12,41 +11,17 @@ function CarouselButton(props: {
   return (
     <button
       id={`carousel-${props.direction}`}
-      className={`${props.direction} shadow p-4 z-10 mx-small absolute bg-slate-50 bg-opacity-50 flex justify-center items-center !w-7 !h-7 transition-all duration-500 rounded-full bottom-1/2 ${
+      className={`p-4 z-10 mx-small absolute bg-transparent flex justify-center items-center !w-[30px] !h-[30px] rounded-full ${
         props.direction === "next" ? "right-0" : "left-0"
       }`}
       onClick={props.onClick}
     >
       <i
-        className={`${props.direction === "next" ? "-rotate-90" : "rotate-90"}`}
-      >
-        <Icon.Arrow className="text-slate-200" />
-      </i>
+        className={`${props.direction === "next" ? "" : "rotate-180"} icons-background-image transparent-arrow min-w-[30px]`}
+      ></i>
     </button>
   );
 }
-
-// const variants = {
-//   enter: (direction: number) => {
-//     return {
-//       x: direction > 0 ? 1000 : -1000,
-//       opacity: 1,
-//     };
-//   },
-//   center: {
-//     zIndex: 1,
-//     x: 0,
-//     opacity: 1,
-//   },
-//   exit: (direction: number) => {
-//     return {
-//       zIndex: 0,
-//       x: direction > 0 ? 1000 : -1000,
-//       opacity: 1,
-//     };
-//   },
-// };
-
 const variants = {
   enter: (direction: number) => {
     return { width: direction > 0 ? "0%" : "100%", opacity: 0 };
