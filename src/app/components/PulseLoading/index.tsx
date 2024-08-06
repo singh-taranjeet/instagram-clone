@@ -38,7 +38,7 @@ function PostsLoading() {
           {/* <div className="rounded-full bg-slate-200 h-10 w-10"></div> */}
           <div className="flex flex-col w-full">
             {Array.from({ length: 4 }).map((_, index) => (
-              <div className="flex-1 space-y-6 py-1">
+              <div className="flex-1 space-y-6 py-1" key={index}>
                 <div className="h-2 bg-slate-200 rounded"></div>
                 <div className="space-y-3">
                   <div className="grid grid-cols-3 gap-4">
