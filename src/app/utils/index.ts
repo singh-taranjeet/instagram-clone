@@ -21,6 +21,7 @@ export const rootQueries = {
   fetchUsers: {
     name: "fetchUsers",
     queryFn: () => {
+      return [];
       return fetch(`${baseUrl}/users`).then((res) => res.json());
     },
   },
