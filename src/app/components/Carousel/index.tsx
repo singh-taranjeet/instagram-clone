@@ -123,7 +123,7 @@ function CarouselButton(
   return (
     <button
       onClick={onClick}
-      className={`z-10 mx-small absolute bg-transparent flex justify-center items-center !w-[30px] !h-[30px] transition-all duration-500 rounded-full !-translate-y-8 -bottom-[5px] ${
+      className={`z-10 mx-small absolute bg-transparent flex justify-center items-center !w-[30px] !h-[30px] transition-all duration-500 rounded-full !-translate-y-8 -bottom-2 ${
         props.direction === "next" ? "right-0" : "left-0"
       }`}
       data-carousel-next
