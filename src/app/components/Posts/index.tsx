@@ -84,7 +84,7 @@ export function Posts() {
       </Modal.ModalDialog>
 
       <LoadMore isFetching={isFetching} nextPage={fetchNextPage}>
-        <PulseLoading.Comments />
+        <PulseLoading.Posts />
       </LoadMore>
     </>
   );
