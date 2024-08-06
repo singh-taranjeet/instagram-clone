@@ -9,7 +9,7 @@ function MobileImageContainer(props: { children: React.ReactNode }) {
       style={{ paddingBottom: `100%`, width: "min(420px, 100vw)" }}
       className="mobile relative flex flex-col justify-center items-center xs:hidden"
     >
-      {props.children}
+      {/* {props.children} */}
     </div>
   );
 }
@@ -17,8 +17,8 @@ function MobileImageContainer(props: { children: React.ReactNode }) {
 function DesktopImageContainer(props: { children: React.ReactNode }) {
   return (
     <div
-      style={{ paddingBottom: `100%`, width: "min(420px, 100vw)" }}
-      className="desktop relative hidden flex-col justify-center items-center xs:flex"
+
+    // className="desktop relative hidden flex-col justify-center items-center xs:flex"
     >
       {props.children}
     </div>
@@ -63,10 +63,6 @@ function Wrapper(props: {
       <MobileImageContainer>
         <Carousel title={title} images={images} fit={fit} />
       </MobileImageContainer>
-
-      <DesktopImageContainer>
-        <Carousel title={title} images={images} fit={fit} />
-      </DesktopImageContainer>
     </React.Fragment>
   );
 }

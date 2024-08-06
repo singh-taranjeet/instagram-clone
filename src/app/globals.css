@@ -12,3 +12,15 @@ body {
   overflow: hidden;
   position: fixed;
 }
+
+.icons-background-image {
+  background-image: url("/icons/icons.png");
+}
+
+.transparent-arrow {
+  background-repeat: no-repeat;
+  background-size: 440px 411px;
+  background-position: -160px -97px;
+  height: 30px;
+  width: 30px;
+}

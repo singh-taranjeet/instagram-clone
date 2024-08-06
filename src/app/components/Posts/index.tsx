@@ -12,6 +12,7 @@ import { ActionBar } from "./components/ActionBar";
 import { Author } from "./components/Author";
 import { LikeComment } from "./components/LikeComment";
 import { PulseLoading } from "../PulseLoading";
+import { Carousel } from "./components/Carousel";
 
 export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
@@ -46,7 +47,7 @@ export function Posts() {
                   profileUrl={post?.user?.profileUrl}
                 />
 
-                <Media.Wrapper
+                <Carousel
                   fit="cover"
                   title={post.description}
                   images={getImages(post.media)}
@@ -83,7 +84,7 @@ export function Posts() {
       </Modal.ModalDialog>
 
       <LoadMore isFetching={isFetching} nextPage={fetchNextPage}>
-        <PulseLoading.Comments />
+        <PulseLoading.Posts />
       </LoadMore>
     </>
   );

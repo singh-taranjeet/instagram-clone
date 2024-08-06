@@ -13,6 +13,7 @@ export interface PostType {
   highlightedComment: {
     content: string;
     user: UserType;
+    createdAt: Date;
   };
   media: {
     name: string;
