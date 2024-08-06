@@ -74,7 +74,7 @@ export const Carousel = (props: {
     setPage([index, newDirection]);
   }
 
-  console.log("page", page, imageIndex);
+  // console.log("page", page, imageIndex);
 
   return (
     <div className="example-container z-0">

@@ -112,7 +112,7 @@ function CarouselButton(
   }>
 ) {
   function onClick() {
-    console.log("on click", props.sliderRef);
+    // console.log("on click", props.sliderRef);
     if (props.direction === "next") {
       props.sliderRef?.current?.slickNext();
     } else {
