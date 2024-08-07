@@ -3,7 +3,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { splitLink } from "../utils";
 
 const client = new ApolloClient({
-  uri: "http://localhost:5555/graphql",
+  uri: "http://Instag-Insta-zIWxeZm8QsDa-75468800.us-east-1.elb.amazonaws.com/graphql",
   cache: new InMemoryCache(),
   link: splitLink,
   ssrMode: true,
