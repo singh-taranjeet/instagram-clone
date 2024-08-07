@@ -1,7 +1,8 @@
 import moment from "moment";
+import { CONFIG } from "../config";
 
-export const baseUrl = "http://localhost:5555";
-export const serverUrl = "http://localhost:5555/graphql";
+export const baseUrl = CONFIG.baseUrl;
+export const serverUrl = `${baseUrl}/graphql`;
 
 export async function fetchGraphQl(query: string) {
   const data = await fetch(serverUrl, {
