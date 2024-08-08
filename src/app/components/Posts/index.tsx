@@ -81,9 +81,9 @@ export function Posts() {
         </Modal.ModalBody>
       </Modal.ModalDialog>
 
-      {/* <LoadMore isFetching={isFetching} nextPage={fetchNextPage}>
+      <LoadMore isFetching={isFetching} nextPage={fetchNextPage}>
         <PulseLoading.Posts />
-      </LoadMore> */}
+      </LoadMore>
     </>
   );
 }
