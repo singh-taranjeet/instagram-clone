@@ -57,12 +57,6 @@ const comment = {
                   id
                   profileUrl
               }
-              post {
-                  description
-                  likes
-                  id
-                  createdAt
-              }
               createdAt
           }
       }`;
