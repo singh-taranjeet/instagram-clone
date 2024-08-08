@@ -7,7 +7,7 @@ interface Props {
   onClickComments: () => void;
   post: PostType;
 }
-export function LikeComment(props: Props) {
+export function LikeComment(props: Readonly<Props>) {
   const { onClickComments, post } = props;
 
   return (

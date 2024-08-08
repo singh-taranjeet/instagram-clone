@@ -25,10 +25,15 @@ type ExpandedViewProps = Props & {
   onClose(): void;
 };
 
-const incrementCommentLikeQuery = gql`
-  mutation UpdateComment($id: ID!, $updateCommentInput: UpdateCommentInput!) {
-    updateComment(id: $id, updateCommentInput: $updateCommentInput) {
+const commentLikeQuery = gql`
+  mutation LikeComment($id: ID!, $userId: ID!) {
+    likeComment(id: $id, userId: $userId) {
       likes
+      likedBy {
+        name
+        id
+        profileUrl
+      }
     }
   }
 `;
@@ -42,7 +47,7 @@ function onClickReply() {
 }
 
 export function ExpandedView(props: ExpandedViewProps) {
-  const isDesktop = useScreenSize() > breakPoints.xs ? true : false;
+  const isDesktop = useScreenSize() > breakPoints.xs;
   const { onClose } = props;
   const [selectedPost, setSelectedPost] = useState<PostType | undefined>(
     undefined
@@ -51,18 +56,28 @@ export function ExpandedView(props: ExpandedViewProps) {
   const queryClient = getQueryClient();
   const posts: any = queryClient.getQueryData([queries.fetchPosts.name]);
 
-  const [incrementCommentLike] = useMutation(incrementCommentLikeQuery);
+  const [incrementCommentLike] = useMutation(commentLikeQuery);
 
-  function onClickCommentLike(id: number, likes: number) {
-    const newLikes = likes + 1;
-
+  function onClickCommentLike(id: number) {
     incrementCommentLike({
       variables: {
         id,
-        updateCommentInput: {
-          likes: newLikes,
-          fields: ["likes"],
-        },
+        userId: 1,
+      },
+      onCompleted: (data) => {
+        updateQuery((prev: any) => {
+          console.log("Prev", prev);
+          const comments = JSON.parse(JSON.stringify(prev.comments));
+          // update the comment in prev
+          comments.forEach((comment: any, index: number) => {
+            if (comment.id === id) {
+              comments[index].likes = data.likeComment.likes;
+            }
+          });
+          return {
+            comments,
+          };
+        });
       },
     });
   }
@@ -78,8 +93,8 @@ export function ExpandedView(props: ExpandedViewProps) {
     });
   }, [posts, selectedPost]);
 
-  const { data, loading, fetchMore, pageEnd } = useComments({
-    postId: selectedPost?.id || "",
+  const { data, loading, fetchMore, pageEnd, updateQuery } = useComments({
+    postId: selectedPost?.id ?? "",
   });
 
   return (
@@ -142,9 +157,7 @@ export function ExpandedView(props: ExpandedViewProps) {
                       </div>
                       <div
                         className="flex items-center cursor-pointer"
-                        onClick={() =>
-                          onClickCommentLike(comment.id, comment.likes)
-                        }
+                        onClick={() => onClickCommentLike(comment.id)}
                       >
                         <Icon.Fav className="w-3 h-h3" label="like"></Icon.Fav>
                       </div>
@@ -163,7 +176,7 @@ export function ExpandedView(props: ExpandedViewProps) {
               <section className="bottom-0 absolute w-full bg-white border-y border-slate-200">
                 <section className="p-gutter flex flex-col gap-2">
                   <ActionBar
-                    post={selectedPost}
+                    entity={selectedPost}
                     onCommentClick={onClickReply}
                   />
                   <span>

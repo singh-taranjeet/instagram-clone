@@ -63,7 +63,7 @@ export function useComments(params: UseCommentsProps) {
     });
   }
 
-  const { loading, data, fetchMore, subscribeToMore } = useQuery(
+  const { loading, data, fetchMore, subscribeToMore, updateQuery } = useQuery(
     fetchCommentQuery,
     {
       variables: {
@@ -79,6 +79,7 @@ export function useComments(params: UseCommentsProps) {
       document: COMMENTS_SUBSCRIPTION,
       variables: { postId: Number(postId) },
       updateQuery: (prev, { subscriptionData }) => {
+        console.log("Subscription data", subscriptionData);
         if (!subscriptionData.data) return prev;
         const newComment = subscriptionData.data.commentAdded;
         const exist = prev.comments.find(
@@ -97,5 +98,6 @@ export function useComments(params: UseCommentsProps) {
     fetchMore: more,
     loading,
     pageEnd,
+    updateQuery,
   };
 }

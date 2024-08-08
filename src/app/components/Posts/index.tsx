@@ -3,7 +3,6 @@ import { useState, useMemo } from "react";
 import React from "react";
 import { usePosts } from "@/app/components/Posts/hooks/usePosts";
 import { Modal } from "../Modal";
-import { Media } from "./components/Media";
 import { LoadMore } from "./components/LoadMore";
 import { getImages } from "./utils";
 import { ModalType, PostType } from "./types";
@@ -35,38 +34,37 @@ export function Posts() {
   return (
     <>
       <ul className="flex flex-col mt-small items-center">
-        {posts &&
-          posts?.map((post: PostType, index: number) => (
-            <li
-              key={`${post.id}-${index}`}
-              className="max-w-[420px] py-small xs:mx-gutter border-b border-slate-200"
-            >
-              <div className="flex flex-col gap-small w-full justify-center">
-                <Author
-                  name={post?.user?.name}
-                  profileUrl={post?.user?.profileUrl}
+        {posts?.map((post: PostType, index: number) => (
+          <li
+            key={`${post.id}-${index}`}
+            className="max-w-[420px] py-small xs:mx-gutter border-b border-slate-200"
+          >
+            <div className="flex flex-col gap-small w-full justify-center">
+              <Author
+                name={post?.user?.name}
+                profileUrl={post?.user?.profileUrl}
+              />
+
+              <Carousel
+                fit="cover"
+                title={post.description}
+                images={getImages(post.media)}
+              />
+
+              <section className="px-gutter xs:px-0">
+                <ActionBar
+                  entity={post}
+                  onCommentClick={() => openCommentsModal(post.id)}
                 />
 
-                <Carousel
-                  fit="cover"
-                  title={post.description}
-                  images={getImages(post.media)}
+                <LikeComment
+                  post={post}
+                  onClickComments={() => openCommentsModal(post.id)}
                 />
-
-                <section className="px-gutter xs:px-0">
-                  <ActionBar
-                    post={post}
-                    onCommentClick={() => openCommentsModal(post.id)}
-                  />
-
-                  <LikeComment
-                    post={post}
-                    onClickComments={() => openCommentsModal(post.id)}
-                  />
-                </section>
-              </div>
-            </li>
-          ))}
+              </section>
+            </div>
+          </li>
+        ))}
       </ul>
 
       <Modal.ModalDialog onClose={onModalClose} open={!!modal?.open}>
@@ -83,9 +81,9 @@ export function Posts() {
         </Modal.ModalBody>
       </Modal.ModalDialog>
 
-      <LoadMore isFetching={isFetching} nextPage={fetchNextPage}>
+      {/* <LoadMore isFetching={isFetching} nextPage={fetchNextPage}>
         <PulseLoading.Posts />
-      </LoadMore>
+      </LoadMore> */}
     </>
   );
 }

@@ -4,47 +4,50 @@ import { gql, useMutation } from "@apollo/client";
 import { getQueryClient } from "@/app/components/ReactQueryProvider";
 import { queries } from "../../queries";
 
-const incrementLikeQuery = gql`
-  mutation UpdatePost($id: ID!, $updatePostInput: UpdatePostInput!) {
-    updatePost(id: $id, updatePostInput: $updatePostInput) {
+const postLikeQuery = gql`
+  mutation LikePost($id: ID!, $userId: ID!) {
+    likePost(id: $id, userId: $userId) {
       likes
+      likedBy {
+        name
+        id
+        profileUrl
+      }
     }
   }
 `;
-
 interface ActionBarProps {
   onCommentClick(): void;
-  post: PostType;
+  entity: PostType;
 }
-export function ActionBar(props: ActionBarProps) {
-  const { onCommentClick, post } = props;
+export function ActionBar(props: Readonly<ActionBarProps>) {
+  const { onCommentClick, entity } = props;
 
-  const [incrementLike] = useMutation(incrementLikeQuery);
+  const [incrementpostLike] = useMutation(postLikeQuery);
 
   const queryClient = getQueryClient();
 
   function onClickLike() {
-    const newLikes = post.likes + 1;
-
-    incrementLike({
+    incrementpostLike({
       variables: {
-        id: post.id,
-        updatePostInput: {
-          likes: newLikes,
-          fields: ["likes"],
-        },
+        id: entity.id,
+        userId: 1,
       },
-    });
-
-    queryClient.setQueryData([queries.fetchPosts.name], (old: any) => {
-      return {
-        ...old,
-        pages: old.pages.map((page: any) =>
-          page.map((item: any) =>
-            item.id === post.id ? { ...post, likes: newLikes } : item
-          )
-        ),
-      };
+      onCompleted: (data) => {
+        // console.log("data", data.likePost);
+        queryClient.setQueryData([queries.fetchPosts.name], (old: any) => {
+          return {
+            ...old,
+            pages: old.pages.map((page: any) =>
+              page.map((item: any) =>
+                item.id === entity.id
+                  ? { ...entity, likes: data.likePost.likes }
+                  : item
+              )
+            ),
+          };
+        });
+      },
     });
   }
 

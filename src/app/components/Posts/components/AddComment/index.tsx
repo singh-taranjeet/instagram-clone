@@ -9,7 +9,7 @@ type Props = {
   selectedPost: PostType;
 };
 
-export function AddComment(props: Props) {
+export function AddComment(props: Readonly<Props>) {
   const { selectedPost } = props;
 
   async function createComment(data: { postId: string; content: string }) {
