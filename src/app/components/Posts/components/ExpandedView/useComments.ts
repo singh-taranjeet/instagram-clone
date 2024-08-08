@@ -75,6 +75,7 @@ export function useComments(params: UseCommentsProps) {
   );
 
   useEffect(() => {
+    console.log("Subscribing to comments", postId);
     subscribeToMore({
       document: COMMENTS_SUBSCRIPTION,
       variables: { postId: Number(postId) },
