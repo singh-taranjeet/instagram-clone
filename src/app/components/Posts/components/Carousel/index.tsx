@@ -173,9 +173,9 @@ export const Carousel = (props: {
                 const swipe = swipePower(offset.x, velocity.x);
 
                 if (swipe < -swipeConfidenceThreshold) {
-                  paginate(1);
-                } else if (swipe > swipeConfidenceThreshold) {
                   paginate(-1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(1);
                 }
               }}
             />
@@ -188,7 +188,7 @@ export const Carousel = (props: {
               <div
                 onClick={() => setPageIndex(idx)}
                 key={idx}
-                className={` mx-[2px] h-[7px] w-[7px] rounded-full cursor-pointer shadow ${Math.abs(page) === idx ? "bg-white" : "bg-[#8f908d]"}`}
+                className={`shadow mx-[2px] h-[7px] w-[7px] rounded-full cursor-pointer shadow ${Math.abs(page) === idx ? "bg-white" : "bg-[#8f908d]"}`}
               />
             ))}
           </div>

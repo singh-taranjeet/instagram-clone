@@ -1,5 +1,5 @@
 export interface UserType {
-  id: string;
+  id: number;
   name: string;
   profileUrl: string;
 }
@@ -15,6 +15,7 @@ export interface PostType {
     user: UserType;
     createdAt: Date;
   };
+  likedBy: UserType[];
   media: {
     name: string;
     url: string;
@@ -27,6 +28,7 @@ export interface CommentType {
   id: number;
   createdAt: Date;
   user: UserType;
+  likedBy: UserType[];
 }
 
 export interface ModalType {

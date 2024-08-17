@@ -10,3 +10,14 @@ export const CONFIG = {
       ? "ws://localhost:5555/graphql"
       : `ws://${prodUrl}/graphql`,
 };
+
+// export const CONFIG = {
+//   baseUrl:
+//     process.env.NODE_ENV === "development"
+//       ? `http://${prodUrl}`
+//       : "http://localhost:5555",
+//   wsLink:
+//     process.env.NODE_ENV === "development"
+//       ? `ws://${prodUrl}/graphql`
+//       : "ws://localhost:5555/graphql",
+// };

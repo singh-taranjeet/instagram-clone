@@ -34,14 +34,17 @@ export function ActionBar(props: Readonly<ActionBarProps>) {
         userId: 1,
       },
       onCompleted: (data) => {
-        // console.log("data", data.likePost);
         queryClient.setQueryData([queries.fetchPosts.name], (old: any) => {
           return {
             ...old,
             pages: old.pages.map((page: any) =>
               page.map((item: any) =>
                 item.id === entity.id
-                  ? { ...entity, likes: data.likePost.likes }
+                  ? {
+                      ...entity,
+                      likes: data.likePost.likes,
+                      likedBy: data.likePost.likedBy,
+                    }
                   : item
               )
             ),
@@ -51,10 +54,16 @@ export function ActionBar(props: Readonly<ActionBarProps>) {
     });
   }
 
+  const isLikedByUser = entity.likedBy.some((user) => user.id === 1);
+
   return (
     <div className="flex gap-small">
       <i className="cursor-pointer" onClick={onClickLike}>
-        <Icon.Fav />
+        {isLikedByUser ? (
+          <Icon.Fav className=" text-red-600" />
+        ) : (
+          <Icon.UnFav />
+        )}
       </i>
       <i className="cursor-pointer" onClick={onCommentClick}>
         <Icon.Comment />

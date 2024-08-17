@@ -126,45 +126,59 @@ export function ExpandedView(props: ExpandedViewProps) {
               />
             </div>
             <div className="mt-12 sm:mt-0 overflow-y-scroll expanded-view-container pb-[145px]">
-              {data?.comments?.map((comment: CommentType, index: number) => (
-                <React.Fragment key={`${comment.id}-${index}`}>
-                  <div className="flex p-gutter">
-                    <div>
-                      <User.image
-                        profileUrl={comment.user.profileUrl}
-                        name={comment.user.name}
-                      />
-                    </div>
-                    <div className="flex justify-between w-full">
-                      <div className="pl-small">
-                        <PostDetails
-                          comment={comment.content}
-                          userName={comment.user.name}
-                        />
+              {data?.comments?.map((comment: CommentType, index: number) => {
+                const isLikedBy = comment.likedBy.some((user) => user.id === 1);
 
-                        <div className="flex items-center gap-small text-text-gray text-extraExtraSmall">
-                          <span>{timeFromNow(comment.createdAt)}</span>
-                          <span className="font-semibold">
-                            {comment.likes || 0} likes
-                          </span>
-                          <span
-                            className="font-semibold"
-                            onClick={onClickReply}
-                          >
-                            Reply
-                          </span>
+                return (
+                  <React.Fragment key={`${comment.id}-${index}`}>
+                    <div className="flex p-gutter">
+                      <div>
+                        <User.image
+                          profileUrl={comment.user.profileUrl}
+                          name={comment.user.name}
+                        />
+                      </div>
+                      <div className="flex justify-between w-full">
+                        <div className="pl-small">
+                          <PostDetails
+                            comment={comment.content}
+                            userName={comment.user.name}
+                          />
+
+                          <div className="flex items-center gap-small text-text-gray text-extraExtraSmall">
+                            <span>{timeFromNow(comment.createdAt)}</span>
+                            <span className="font-semibold">
+                              {comment.likes || 0} likes
+                            </span>
+                            <span
+                              className="font-semibold"
+                              onClick={onClickReply}
+                            >
+                              Reply
+                            </span>
+                          </div>
+                        </div>
+                        <div
+                          className="flex items-center cursor-pointer"
+                          onClick={() => onClickCommentLike(comment.id)}
+                        >
+                          {isLikedBy ? (
+                            <Icon.Fav
+                              className="w-3 h-h3 text-red-600"
+                              label="Unlike"
+                            ></Icon.Fav>
+                          ) : (
+                            <Icon.UnFav
+                              className="w-3 h-h3"
+                              label="like"
+                            ></Icon.UnFav>
+                          )}
                         </div>
                       </div>
-                      <div
-                        className="flex items-center cursor-pointer"
-                        onClick={() => onClickCommentLike(comment.id)}
-                      >
-                        <Icon.Fav className="w-3 h-h3" label="like"></Icon.Fav>
-                      </div>
                     </div>
-                  </div>
-                </React.Fragment>
-              ))}
+                  </React.Fragment>
+                );
+              })}
               {pageEnd ? null : (
                 <LoadMore isFetching={loading} nextPage={fetchMore}>
                   <PulseLoading.Comments />

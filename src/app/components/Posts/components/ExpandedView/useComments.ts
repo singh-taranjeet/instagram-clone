@@ -9,6 +9,11 @@ const fetchCommentQuery = gql`
       likes
       id
       createdAt
+      likedBy {
+        name
+        id
+        profileUrl
+      }
       user {
         name
         id
