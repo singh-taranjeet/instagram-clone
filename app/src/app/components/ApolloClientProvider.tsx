@@ -1,9 +1,10 @@
 "use client";
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { splitLink } from "../utils";
+import { CONFIG } from "../config";
 
 const client = new ApolloClient({
-  uri: "http://Instag-Insta-zIWxeZm8QsDa-75468800.us-east-1.elb.amazonaws.com/graphql",
+  uri: `${CONFIG.baseUrl}/graphql`,
   cache: new InMemoryCache(),
   link: splitLink,
   ssrMode: true,
