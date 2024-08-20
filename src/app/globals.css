@@ -8,10 +8,10 @@ body {
   overflow-x: hidden;
 }
 
-.stop-body-scrolling {
+/* .stop-body-scrolling {
   overflow: hidden;
   position: fixed;
-}
+} */
 
 .icons-background-image {
   background-image: url("/icons/icons.png");
@@ -24,3 +24,7 @@ body {
   height: 30px;
   width: 30px;
 }
+
+/* body {
+  padding-bottom: env(safe-area-inset-bottom);
+} */

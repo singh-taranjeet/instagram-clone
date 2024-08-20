@@ -1,6 +1,6 @@
 "use client";
 import { User } from "@/app/components/UserImage";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CommentType, ModalType, PostType } from "../../types";
 import { getImages } from "../../utils";
 import { Author } from "../Author";
@@ -111,7 +111,7 @@ export function ExpandedView(props: ExpandedViewProps) {
               />
             </div>
           ) : null}
-          <section className="bg-white relative flex-1 sm:overflow-y-scroll overflow-y-hidden">
+          <section className="bg-white relative flex-1 sm:overflow-y-scroll overflow-y-hidden min-w-72">
             {!isDesktop ? (
               <div className="px-gutter flex py-small justify-between border-b border-slate-200 absolute top-0 w-full">
                 <i className="self-start" onClick={onClose}>

@@ -171,7 +171,7 @@ function PlusIcon(props: IconProps) {
 function UnFavIcon(props: IconProps) {
   return (
     <svg
-      aria-label={props.label || "Notifications"}
+      aria-label={props.label || "UnFavorite"}
       className={props.className || ""}
       fill="currentColor"
       height="24"
@@ -188,7 +188,7 @@ function UnFavIcon(props: IconProps) {
 function FavIcon(props: IconProps) {
   return (
     <svg
-      aria-label={props.label || "Unlike"}
+      aria-label={props.label || "Favorite"}
       // aria-label="Unlike"
       className={props.className || ""}
       fill="currentColor"
