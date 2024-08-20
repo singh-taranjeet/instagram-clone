@@ -66,21 +66,21 @@ function ModalDialog(
 ) {
   const { children, onClose = () => {}, open } = props;
 
-  useEffect(() => {
-    if (open) {
-      // add class to body to prevent scrolling, stop-body-scrolling
-      document.body.classList.add("stop-body-scrolling");
-    } else {
-      // remove class to body to allow scrolling
-      document.body.classList.remove("stop-body-scrolling");
-    }
-  }, [open]);
+  // useEffect(() => {
+  //   if (open) {
+  //     // add class to body to prevent scrolling, stop-body-scrolling
+  //     document.body.classList.add("stop-body-scrolling");
+  //   } else {
+  //     // remove class to body to allow scrolling
+  //     document.body.classList.remove("stop-body-scrolling");
+  //   }
+  // }, [open]);
 
   return (
     <div
       onClick={closeModal(onClose)}
       className={`${
-        open ? "flex" : "hidden"
+        open ? "" : "hidden"
       } fixed z-50 left-0 top-0 w-full h-full overflow-auto bg-slate-900/90 shadow`}
     >
       {open ? children : null}

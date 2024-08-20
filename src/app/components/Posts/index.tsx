@@ -16,6 +16,7 @@ import { Carousel } from "./components/Carousel";
 export function Posts() {
   const { data, fetchNextPage, isFetching } = usePosts();
   const [modal, setModal] = useState<ModalType | undefined>(undefined);
+  const [hidden, setHidden] = useState<boolean>(false);
 
   function onModalClose() {
     setModal(undefined);
@@ -33,7 +34,7 @@ export function Posts() {
 
   return (
     <>
-      <ul className="flex flex-col mt-small items-center">
+      <ul className={`flex flex-col mt-small items-center`}>
         {posts?.map((post: PostType, index: number) => (
           <li
             key={`${post.id}-${index}`}

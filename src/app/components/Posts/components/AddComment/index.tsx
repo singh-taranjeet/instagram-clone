@@ -1,4 +1,4 @@
-import React from "react";
+import React, { KeyboardEventHandler } from "react";
 import { User } from "@/app/components/UserImage";
 import { PostType } from "../../types";
 import { useMutation } from "@tanstack/react-query";
@@ -36,6 +36,12 @@ export function AddComment(props: Readonly<Props>) {
     );
   }
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === "Enter") {
+      onClickPost();
+    }
+  };
+
   return (
     <section className="px-gutter py-2 border-t flex items-center bg-white w-full gap-small">
       <div>
@@ -47,6 +53,7 @@ export function AddComment(props: Readonly<Props>) {
       <textarea
         value={content}
         onChange={handleChange}
+        onKeyDown={handleKeyPress}
         id="AddAComment"
         className="w-full outline-none overflow-y-hidden h-5 max-h-20 text-sm resize-none flex"
         aria-label="Add a comment"

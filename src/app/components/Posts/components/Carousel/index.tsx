@@ -32,7 +32,7 @@ const variants = {
   },
 };
 
-const swipeConfidenceThreshold = 10000;
+const swipeConfidenceThreshold = 90000;
 const swipePower = (offset: number, velocity: number) => {
   return Math.abs(offset) * velocity;
 };
@@ -109,14 +109,14 @@ export const Carousel = (props: {
             }}
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={1}
+            dragElastic={2}
             onDragEnd={(e, { offset, velocity }) => {
               const swipe = swipePower(offset.x, velocity.x);
 
               if (swipe < -swipeConfidenceThreshold) {
-                paginate(1);
-              } else if (swipe > swipeConfidenceThreshold) {
                 paginate(-1);
+              } else if (swipe > swipeConfidenceThreshold) {
+                paginate(1);
               }
             }}
           />
