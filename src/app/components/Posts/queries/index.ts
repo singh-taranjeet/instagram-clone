@@ -22,6 +22,11 @@ const post = {
               profileUrl
             }
           }
+          likedBy {
+            name
+            id
+            profileUrl
+          }
           media {
               name
               type

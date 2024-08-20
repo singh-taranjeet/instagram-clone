@@ -13,7 +13,7 @@ export function Status() {
   return (
     <div className="w-[calc(100vw-40px)] sm:w-[calc(100vw-200px)] md:max-w-lg lg:max-w-screen-md mx-auto md:my-0 mt-11 sm:mt-small justify-center gap-small border-y sm:border-0 py-small border-slate-200">
       <Carousel>
-        {data.map((user: any, index: number) => (
+        {data?.map((user: any, index: number) => (
           <div
             key={`${user.id}-${index}`}
             className="flex justify-center items-center cursor-pointer"

@@ -74,8 +74,6 @@ export const Carousel = (props: {
     setPage([index, newDirection]);
   }
 
-  // console.log("page", page, imageIndex);
-
   return (
     <div className="example-container z-0">
       <AnimatePresence initial={false} custom={direction}>
@@ -175,26 +173,33 @@ export const Carousel = (props: {
                 const swipe = swipePower(offset.x, velocity.x);
 
                 if (swipe < -swipeConfidenceThreshold) {
-                  paginate(1);
-                } else if (swipe > swipeConfidenceThreshold) {
                   paginate(-1);
+                } else if (swipe > swipeConfidenceThreshold) {
+                  paginate(1);
                 }
               }}
             />
           )}
         </div>
-        <div className="absolute flex justify-center mb-2 bottom-0 z-1">
-          {images.map((_, idx) => (
-            <div
-              onClick={() => setPageIndex(idx)}
-              key={idx}
-              className={` mx-[2px] h-[7px] w-[7px] rounded-full cursor-pointer shadow ${Math.abs(page) === idx ? "bg-white" : "bg-[#8f908d]"}`}
-            />
-          ))}
-        </div>
+        {/* Render dots */}
+        {images.length > 1 ? (
+          <div className="absolute flex justify-center mb-2 bottom-0 z-1">
+            {images.map((_, idx) => (
+              <div
+                onClick={() => setPageIndex(idx)}
+                key={idx}
+                className={`shadow mx-[2px] h-[7px] w-[7px] rounded-full cursor-pointer shadow ${Math.abs(page) === idx ? "bg-white" : "bg-[#8f908d]"}`}
+              />
+            ))}
+          </div>
+        ) : null}
       </AnimatePresence>
-      <CarouselButton direction="prev" onClick={() => paginate(-1)} />
-      <CarouselButton direction="next" onClick={() => paginate(1)} />
+      {images.length > 1 ? (
+        <>
+          <CarouselButton direction="prev" onClick={() => paginate(-1)} />
+          <CarouselButton direction="next" onClick={() => paginate(1)} />
+        </>
+      ) : null}
     </div>
   );
 };
