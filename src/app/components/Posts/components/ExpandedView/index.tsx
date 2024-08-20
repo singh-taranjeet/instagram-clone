@@ -72,6 +72,7 @@ export function ExpandedView(props: ExpandedViewProps) {
           comments.forEach((comment: any, index: number) => {
             if (comment.id === id) {
               comments[index].likes = data.likeComment.likes;
+              comments[index].likedBy = data.likeComment.likedBy;
             }
           });
           return {
