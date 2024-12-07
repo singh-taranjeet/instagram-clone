@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
+    "docker:build:push": "docker build -t taranjeetsingh/insta-ui . && docker push taranjeetsingh/insta-ui",
     "build-storybook": "storybook build"
   },
   "dependencies": {
